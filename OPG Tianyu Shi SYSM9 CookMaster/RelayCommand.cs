@@ -1,4 +1,6 @@
-﻿namespace MVVM_KlonaMIg.MVVM
+﻿using System.Windows.Input;
+
+namespace OPG_Tianyu_Shi_SYSM9_CookMaster
 {
     public class RelayCommand : ICommand
     {

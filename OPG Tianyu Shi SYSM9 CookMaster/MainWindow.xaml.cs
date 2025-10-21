@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using OPG_Tianyu_Shi_SYSM9_CookMaster.Managers;
+using OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +21,8 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster
         public MainWindow()
         {
             InitializeComponent();
+            var userManager = (UserManager)Application.Current.Resources["UserManager"];
+            DataContext = new MainViewModel(userManager);
         }
     }
 }
