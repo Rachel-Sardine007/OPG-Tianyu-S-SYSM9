@@ -1,9 +1,10 @@
 ﻿<Application x:Class="OPG_Tianyu_Shi_SYSM9_CookMaster.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster"
+             xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster" 
+             xmlns:Managers="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Managers"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <managers:UserManager x:Key="UserManager"/>
+        <Managers:UserManager x:Key="UserManager"/>
     </Application.Resources>
 </Application>

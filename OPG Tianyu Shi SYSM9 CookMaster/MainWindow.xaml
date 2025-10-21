@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="420" Width="930">
+    <StackPanel Margin="20">
+        <StackPanel.Resources>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="Margin" Value="10,10,0,0" />
+                <Setter Property="TextAlignment" Value="Center"/>
+            </Style>
+        </StackPanel.Resources>
+        <TextBlock Text="Welcome!" FontSize="40" />
+        <TextBlock Text="{Binding error}" Foreground="Red"/>
+        <TextBox Text="{Binding Username, Mode=TwoWay}" Margin ="0,0,0,10" Width="200" />
+        <PasswordBox Margin="0,0,0,10" Width="200"/>
+        <Button Content="Log in" Width ="50" />
+        <TextBlock Text="Forgot your password?"/>
+        <Label/>
+    </StackPanel>
 </Window>
