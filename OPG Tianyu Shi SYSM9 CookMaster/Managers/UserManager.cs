@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,13 @@ using System.Windows.Controls;
 
 namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
 {
-    public class UserManager
+    // Implement interface
+    public class UserManager : INotifyPropertyChanged
     {
         // Property
         private List<User> _users;
         private User _currentUser;
+
 
         // Constructor
         public UserManager()
@@ -26,7 +29,10 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         public User CurrentUser
         {
             get => _currentUser;
-            private set { _currentUser = value; }
+            private set {
+                _currentUser = value;
+                OnPropertyChanged(nameof(CurrentUser));
+            }
         }
 
         // DefaultUsers
@@ -49,7 +55,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         // Method to check login status and return true of false
         public bool Login(string username, string password)
         {
-            foreach (var user in _users) 
+            foreach (var user in _users)
             {
                 if (string.Equals(user.Username, username, StringComparison.OrdinalIgnoreCase)
                     && user.Password == password)
@@ -113,7 +119,11 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
             if (ValidLength(password) && CheckVersal(password) && CheckChar(usesrname))
             {
                 CurrentUser.Password = password;
-            }  
+            }
         }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged(string n) => PropertyChanged?.Invoke
+            (this, new PropertyChangedEventArgs(n)); 
     }
 }

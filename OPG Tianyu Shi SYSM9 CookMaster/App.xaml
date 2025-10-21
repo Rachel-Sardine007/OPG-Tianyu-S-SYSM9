@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <managers:UserManager x:Key="UserManager"/>
     </Application.Resources>
 </Application>
