@@ -115,11 +115,5 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
                 CurrentUser.Password = password;
             }  
         }
-
-        // Method for getting logged-in user info
-        public void GetLoggedIn()
-        {
-            
-        }
     }
 }
