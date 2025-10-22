@@ -80,7 +80,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             {
                 return true;
             }
-            Error = "You must choose a country";
             return false;
         }
             
@@ -90,13 +89,15 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         // Event Dialog
         public void CreateUser()
         {
-            if (_userManager.FindUser(Username))
+            if (!_userManager.FindUser(Username))
             {
                 if (_userManager.ValidatePassword(Password))
                 {
                     _userManager.Register(Username, Password, Country);
                     OnRegisterSuccess?.Invoke(this, System.EventArgs.Empty);
-                }else
+                    MessageBox.Show("Register successfully!");
+                }
+                else
                 {
                     Error = "Password must be 8 character long and includes 1 number and 1 special character!";
                 }
@@ -105,6 +106,8 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             {
                 Error = "Username already exists";
             }
+
+            
                 
         }
 

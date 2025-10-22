@@ -87,12 +87,12 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
             });
         }
 
-        // Method to check if username already exists
+        // Method to check if username already exists and return true if user doesnt exist
         public bool FindUser(string username)
         {
             foreach (var user in _users)
             {
-                if (!string.Equals(user.Username, username, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(user.Username, username, StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }
@@ -101,7 +101,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         }
 
         // Method to control password
-
+        // !! need to be updated: double check password
         public bool ValidatePassword(string password)
         {
             if (password.Length >= 8 && password.Any(ch => char.IsUpper(ch)) && password.Any(ch => !char.IsLetterOrDigit(ch))){

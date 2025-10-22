@@ -8,5 +8,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="CountryList.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="CountryList.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 	
 </Project>

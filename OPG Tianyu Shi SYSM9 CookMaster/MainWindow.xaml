@@ -17,10 +17,10 @@
         <TextBlock Text="{Binding Error}" Foreground="Red"/>
         <TextBox Text="{Binding Username, Mode=TwoWay}" Margin ="0,10,0,5" Width="200" />
         <PasswordBox x:Name="Pwd" Margin="0,10,0,10" Width="200" PasswordChanged="Pwd_PasswordChanged"/>
-        <Button x:Name="Btn_Login" Content="Log in" Width ="50" Click="Btn_Login_Click"/>
+        <Button x:Name="Btn_Login" Content="Log in" Width ="60" Click="Btn_Login_Click"/>
         <TextBlock Text="Forgot your password?"/>
         <TextBlock Text="New user?"/>
-        <Button x:Name="Btn_Register" Content="Register" Width="50" Click="Btn_Register_Click"/>
+        <Button x:Name="Btn_Register" Content="Register" Width="60" Click="Btn_Register_Click"/>
         <Label Width="300" Height="100" Margin="0,20,0,0"/>
     </StackPanel>
 </Window>
