@@ -1,5 +1,6 @@
 ﻿using OPG_Tianyu_Shi_SYSM9_CookMaster.Managers;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels;
+using OPG_Tianyu_Shi_SYSM9_CookMaster.Views;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,5 +26,24 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster
             DataContext = new MainViewModel(userManager);
         }
 
+        // PasswordBox 
+        private void Pwd_PasswordChanged(object s, RoutedEventArgs e)
+        {
+            if (DataContext is MainViewModel viewModel) viewModel.Password = Pwd.Password;
+        }
+
+        private void Btn_Register_Click(object sender, RoutedEventArgs e)
+        {
+            RegisterWindow registerWindow= new RegisterWindow();
+            var oldWindow = Application.Current.MainWindow;
+            oldWindow.Close();
+            registerWindow.Show();
+
+        }
+
+        private void Btn_Login_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -17,6 +17,8 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         private List<User> _users;
         private User _currentUser;
 
+        // public list for reference use later
+        public List<User> UserList {  get { return _users; } }
 
         // Constructor
         public UserManager()
@@ -36,7 +38,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         }
 
         // DefaultUsers
-        private void SetDefaultUsers()
+        public void SetDefaultUsers()
         {
             _users.Add(new User
             {
@@ -99,28 +101,16 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         }
 
         // Method to control password
-        public bool ValidLength(string password)
+
+        public bool ValidatePassword(string password)
         {
-            return password.Length >= 8;
-        }
-        public bool CheckVersal(string password)
-        {
-            return password.Any(ch => char.IsUpper(ch));
-        }
-        public bool CheckChar(string password)
-        {
-            // using linq and Any method
-            return password.Any(ch => !char.IsLetterOrDigit(ch));
+            if (password.Length >= 8 && password.Any(ch => char.IsUpper(ch)) && password.Any(ch => !char.IsLetterOrDigit(ch))){
+                return true;
+            }
+            return false;
         }
 
-        // Method to change password for CurrentUser
-        public void ChangePassword(string usesrname, string password)
-        {
-            if (ValidLength(password) && CheckVersal(password) && CheckChar(usesrname))
-            {
-                CurrentUser.Password = password;
-            }
-        }
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string n) => PropertyChanged?.Invoke

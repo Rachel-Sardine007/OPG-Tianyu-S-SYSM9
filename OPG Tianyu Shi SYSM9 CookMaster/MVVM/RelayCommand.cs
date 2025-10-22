@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace OPG_Tianyu_Shi_SYSM9_CookMaster
+namespace OPG_Tianyu_Shi_SYSM9_CookMaster.MVVM
 {
     public class RelayCommand : ICommand
     {
