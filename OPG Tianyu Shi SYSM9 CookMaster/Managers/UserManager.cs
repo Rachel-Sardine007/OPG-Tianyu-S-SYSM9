@@ -1,4 +1,5 @@
 ﻿using OPG_Tianyu_Shi_SYSM9_CookMaster.Models;
+using OPG_Tianyu_Shi_SYSM9_CookMaster.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -11,7 +12,7 @@ using System.Windows.Controls;
 namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
 {
     // Implement interface
-    public class UserManager : INotifyPropertyChanged
+    public class UserManager : ViewModelBase
     {
         // Property
         private List<User> _users;
@@ -109,11 +110,5 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
             }
             return false;
         }
-
-
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private void OnPropertyChanged(string n) => PropertyChanged?.Invoke
-            (this, new PropertyChangedEventArgs(n)); 
     }
 }

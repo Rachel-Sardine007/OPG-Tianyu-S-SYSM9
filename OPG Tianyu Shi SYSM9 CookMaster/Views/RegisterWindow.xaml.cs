@@ -3,6 +3,7 @@ using OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,9 +27,20 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
         {
             InitializeComponent();
             var userManager = (UserManager)Application.Current.Resources["UserManager"];
-            DataContext = new RegisterViewModel(userManager);
+            var viewModel = new RegisterViewModel(userManager);
+            viewModel.OnRegisterSuccess += RegisterViewModel_OnRegisterSuccess;
+            
+            DataContext = viewModel;
             LoadCountryList();
             
+        }
+
+        private void RegisterViewModel_OnRegisterSuccess(object? sender, EventArgs e)
+        {
+            var newMain = new MainWindow();
+            newMain.Show();
+
+            this.Close();
         }
 
         // Load CountryList
@@ -45,23 +57,27 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
             Cmb_Country.ItemsSource = countryList.ToList();
             Cmb_Country.DisplayMemberPath = "Name";
             Cmb_Country.SelectedValuePath = "Code";
+            // MessageBox to check how many countries are loaded successfully
             // MessageBox.Show("Loaded countries: " + countryList.Count());
 
         }
 
         private void Pwd1_PasswordChanged(object s, RoutedEventArgs e)
         {
-            if (DataContext is RegisterViewModel viewModel) viewModel.Password = Pwd1.Password;
-        }
-
-        private void Pwd_PasswordChanged(object s, RoutedEventArgs e)
-        {
-            if (DataContext is RegisterViewModel viewModel) viewModel.Password = Pwd2.Password;
+            if (DataContext is RegisterViewModel viewModel) viewModel.Password1 = Pwd1.Password;
         }
 
         private void Pwd2_PasswordChanged(object sender, RoutedEventArgs e)
         {
+            if (DataContext is RegisterViewModel viewModel) viewModel.Password2 = Pwd2.Password;
+        }
 
+        private void Btn_BackToMain_Click(object sender, RoutedEventArgs e)
+        {
+            var newMain = new MainWindow();
+            newMain.Show();
+
+            this.Close();
         }
     }
 }

@@ -38,7 +38,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster
             var oldWindow = Application.Current.MainWindow;
             oldWindow.Close();
             registerWindow.Show();
-
         }
 
         private void Btn_Login_Click(object sender, RoutedEventArgs e)

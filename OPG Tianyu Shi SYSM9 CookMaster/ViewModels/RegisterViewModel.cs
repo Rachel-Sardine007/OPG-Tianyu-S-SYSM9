@@ -16,7 +16,8 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         // Property
         private UserManager _userManager;
         private string _username { get; set; }
-        private string _password { get; set; }
+        private string _password1 { get; set; }
+        private string _password2 {  get; set; } // re-enter password
         private string _country { get; set; }
         private string _error {  get; set; }
 
@@ -25,20 +26,56 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             get => _username;
             set
             {
-                _username = value;
+                if (_username != value)
+                {
+                    _username = value;
+                    OnPropertyChanged();
+
+                    // Call FindUser method to check if username already exists ?? 
+                    if (_userManager.FindUser(Username))
+                    {
+                        Error = "Username already exists";
+                 
+                    }
+                    else
+                    {
+                        Error = string.Empty;
+                    }
+
+                    // Call property when RegisterCommand runs
+                    CommandManager.InvalidateRequerySuggested();
+
+                }
+            }
+        }
+
+        public string Password1
+        {
+            get => _password1;
+            set
+            {
+                _password1 = value;
                 OnPropertyChanged();
                 CommandManager.InvalidateRequerySuggested();
             }
         }
 
-        public string Password
+        public string Password2
         {
-            get => _password;
+            get => _password2;
             set
             {
-                _password = value;
+                _password2 = value;
                 OnPropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
+
+                if(_password2 != _password1)
+                {
+                    Error = $"Passwords don't match, re-enter password again";
+                }
+                else
+                {
+                    Error = string.Empty;
+                }
             }
         }
 
@@ -58,8 +95,12 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             get => _error;
             set
             {
-                _error = value;
-                OnPropertyChanged();
+                if (_error != value)
+                {
+                    _error = value;
+
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -75,59 +116,38 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         // Control blank space
         private bool canRegister()
         {
-            if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password)
+            if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password1)
             && !string.IsNullOrWhiteSpace(Country))
             {
                 return true;
             }
-            return false;
+                return false; 
         }
             
        
 
-        // Call usermanager methods to check if username already exists and validate password
-        // Event Dialog
-        public void CreateUser()
+        // ?? Call usermanager methods to check if username already exists and validate password 
+        // Event Dialog 
+        private void CreateUser()
         {
             if (!_userManager.FindUser(Username))
             {
-                if (_userManager.ValidatePassword(Password))
+                if (_userManager.ValidatePassword(Password1))
                 {
-                    _userManager.Register(Username, Password, Country);
+                    _userManager.Register(Username, Password1, Country);
                     OnRegisterSuccess?.Invoke(this, System.EventArgs.Empty);
                     MessageBox.Show("Register successfully!");
                 }
                 else
                 {
-                    Error = "Password must be 8 character long and includes 1 number and 1 special character!";
+                    Error = "Password must be 8 character long " +
+                        "and includes 1 number and 1 special character!";
                 }
             }
-            else
-            {
-                Error = "Username already exists";
-            }
-
-            
                 
         }
 
         public ICommand RegisterCommand { get; }
         public event System.EventHandler OnRegisterSuccess;
-
-        private void Register()
-        {
-            // Save reference to the oldMain
-            var oldMain = Application.Current.MainWindow;
-
-            // Close MainWindow without att end the program
-            if (oldMain != null)
-                oldMain.Close();
-
-            // Show register window
-            var register = new RegisterWindow();
-            var result = register.ShowDialog();
-
-            
-        }
     }
 }
