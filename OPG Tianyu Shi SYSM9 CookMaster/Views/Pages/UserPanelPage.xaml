@@ -5,8 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Views.Pages" 
       xmlns:mvvm="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.MVVM" 
-      xmlns:viewmodels="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels" xmlns:managers="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Managers"
-      d:DataContext="{d:DesignInstance Type=managers:UserManager}"
+      xmlns:viewmodels="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels" 
+      xmlns:managers="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Managers"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UserPanelPage">
@@ -16,25 +16,33 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid>
-            <StackPanel Orientation="Horizontal">
-            <Label Height="50" Width="100"/>
-            <TextBlock Text="Welcome!" FontSize="20" Height="30"/>
-            <TextBlock Text="{Binding CurrentUser}" FontSize="20" Height="30"/>
+            <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Welcome, " FontSize="20" Height="30" Margin="200,20,0,20"/>
+                <TextBlock Text="{Binding CurrentUser.Username}" FontSize="20" Height="30" Width="auto"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <Button Width="70" Height="30" Content="Recipe List" Margin="10,10,10,10"/>
-                <Button Width="70" Height="30" Content="Add Recipe" Margin=" 10,10,10,10"/>
+                <Button Width="90" Height="40" Content="Recipe List" Margin="10,10,10,10"
+                        Command="{Binding ViewRecipeCommand}"/>
+                <Button Width="90" Height="40" Content="Add Recipe" Margin=" 10,10,10,10"
+                        Command="{Binding AddRecipeCommand}"/>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2" >
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <Button Width="70" Height="30" Content="User Details" Margin="10,10,10,10"/>
-                <Button Width="70" Height="30" Content="Log out" Margin="10,10,10,10"/>
+                <Button Width="90" Height="40" Content="User Details" Margin="10,10,10,10"
+                        Command="{Binding ViewUserCommand}"/>
+                <Button Width="90" Height="40" Content="Log out" Margin="10,10,10,10"
+                        Command="{Binding LogoutCommand}"/>
             </StackPanel>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Image Source="C:\Mac\Home\Documents\Csharp101\Inluppg\OPG Tianyu Shi SYSM9 CookMaster\OPG Tianyu Shi SYSM9 CookMaster\Views\Pages\SplashImage.png" 
+       Height="100" Width="300" VerticalAlignment="Center"/>
         </Grid>
     </Grid>
 </Page>

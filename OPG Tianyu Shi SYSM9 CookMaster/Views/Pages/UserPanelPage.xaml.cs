@@ -26,7 +26,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views.Pages
         {
             InitializeComponent();
             var userManager = (UserManager)Application.Current.Resources["UserManager"];
-            DataContext = new MainViewModel(userManager);
+            DataContext = new UserPanelViewModel(userManager);
  
         }
     }

@@ -38,6 +38,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
         private void RegisterViewModel_OnRegisterSuccess(object? sender, EventArgs e)
         {
             var newMain = new MainWindow();
+            // Make the Frame globally available
             newMain.Show();
 
             this.Close();

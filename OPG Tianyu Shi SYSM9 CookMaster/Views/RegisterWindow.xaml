@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Views"
         xmlns:viewmodels="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels" 
-        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="RegisterWindow" Height="450" Width="800">
     <ScrollViewer>

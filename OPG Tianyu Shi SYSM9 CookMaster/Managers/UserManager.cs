@@ -20,6 +20,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
 
         // public list for reference use later
         public List<User> UserList {  get { return _users; } }
+        public User Current { get { return _currentUser; } }
 
         // Constructor
         public UserManager()

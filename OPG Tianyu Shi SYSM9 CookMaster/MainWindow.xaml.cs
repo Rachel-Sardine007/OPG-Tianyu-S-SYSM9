@@ -3,6 +3,7 @@ using OPG_Tianyu_Shi_SYSM9_CookMaster.Service;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.Views;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.Views.Pages;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,10 +29,10 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster
             var viewModel = new MainViewModel(userManager);
             DataContext = viewModel;
 
+
             // Make the Frame globally available
             AppNavigator.MainFrame = MainFrame;
-
-            // Load Splashpage 
+            // Load Splashpage as the first page
             MainFrame.Navigate(new SplashPage());
 
         }
