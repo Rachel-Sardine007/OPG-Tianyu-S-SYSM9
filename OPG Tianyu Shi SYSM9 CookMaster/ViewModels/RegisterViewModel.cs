@@ -16,8 +16,8 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         // Property
         private readonly UserManager _userManager;
         private string _username { get; set; }
-        private string _password1 { get; set; }
-        private string _password2 {  get; set; } // re-enter password
+        private string _password { get; set; }
+        private string _confirmPassword {  get; set; } // re-enter password
         private string _country { get; set; }
         private string _error {  get; set; }
 
@@ -49,28 +49,28 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             }
         }
 
-        public string Password1
+        public string Password
         {
-            get => _password1;
+            get => _password;
             set
             {
-                _password1 = value;
+                _password = value;
                 OnPropertyChanged();
                 CommandManager.InvalidateRequerySuggested();
             }
         }
 
-        public string Password2
+        public string ConfirmPassword
         {
-            get => _password2;
+            get => _confirmPassword;
             set
             {
-                _password2 = value;
+                _confirmPassword = value;
                 OnPropertyChanged();
 
-                if(_password2 != _password1)
+                if(_confirmPassword != _password)
                 {
-                    Error = $"Passwords don't match, re-enter password again";
+                    Error = $"Passwords do not match";
                 }
                 else
                 {
@@ -111,13 +111,15 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             RegisterCommand = new RelayCommand(
                 excute => CreateUser(),
                 canExcute => canRegister());
+
+
         }
 
         // Control blank space
         private bool canRegister()
         {
-            if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password1)
-            && !string.IsNullOrWhiteSpace(Country))
+            if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password)
+            && !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Country))
             {
                 return true;
             }
@@ -132,9 +134,9 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         {
             if (!_userManager.FindUser(Username))
             {
-                if (_userManager.ValidatePassword(Password1))
+                if (_userManager.ValidatePassword(Password))
                 {
-                    _userManager.Register(Username, Password1, Country);
+                    _userManager.Register(Username, Password, Country);
                     OnRegisterSuccess?.Invoke(this, System.EventArgs.Empty);
                     MessageBox.Show("Register successfully!");
                 }
@@ -149,5 +151,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
 
         public ICommand RegisterCommand { get; }
         public event System.EventHandler OnRegisterSuccess;
+
+
     }
 }

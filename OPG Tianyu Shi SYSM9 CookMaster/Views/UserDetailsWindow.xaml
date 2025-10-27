@@ -3,10 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Views"
+        xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Views" 
+        xmlns:managers="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=managers:UserPanelViewModel}"
         mc:Ignorable="d"
         Title="UserDetailsWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <Image Source="C:\Mac\Home\Documents\Csharp101\Inluppg\OPG Tianyu Shi SYSM9 CookMaster\OPG Tianyu Shi SYSM9 CookMaster\Views\Pages\SplashImage.png"
+                     Width="250" Height="100"/>
+        </Grid>
+        <Grid Grid.Row ="1" Grid.Column="1">
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="0,5,0,5"/>
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock Text="Username" />
+                <TextBox x:Name="TxB_Username"
+                    Text="{Binding CurrentUser.Username}" IsEnabled="False"/>
+                <Button  Content="Change password" Width="150" HorizontalAlignment="Left" 
+                        Margin="0,10,0,5" />
+                <TextBlock Text="Country"/>
+                <ComboBox x:Name="CmB_Country"
+                    Text="{Binding CurrentUser.Country}" IsEnabled="False"/>
+                <Button x:Name="Btn_Edit" Click="Btn_Edit_Click"
+                    Content="Edit" Width="90" Margin="0,30,0,0"/>
+                <Button x:Name="Btn_Save"
+                    Content="Save" Width="90" Margin="0,10,0,0" Visibility="Hidden"/>
+                <Button Content="Cancel" Width="90" Margin="0,10,0,0" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

@@ -1,5 +1,7 @@
 ﻿using OPG_Tianyu_Shi_SYSM9_CookMaster.Managers;
+using OPG_Tianyu_Shi_SYSM9_CookMaster.Service;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels;
+using OPG_Tianyu_Shi_SYSM9_CookMaster.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,10 +39,23 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
 
         private void RegisterViewModel_OnRegisterSuccess(object? sender, EventArgs e)
         {
-            var newMain = new MainWindow();
-            // Make the Frame globally available
-            newMain.Show();
+            var newMain = Application.Current.Windows
+                .OfType<MainWindow>()
+                .FirstOrDefault();
 
+            if (newMain == null)
+            {
+                newMain = new MainWindow();
+                Application.Current.MainWindow = newMain;
+                newMain.Show(); // make sure mainfram is visible
+            }
+            else
+            {
+                newMain.Show();
+                newMain.Activate();
+            }
+            
+            AppNavigator.Navigate(new LoginPage()); // navigate to login page
             this.Close();
         }
 
@@ -65,19 +80,33 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
 
         private void Pwd1_PasswordChanged(object s, RoutedEventArgs e)
         {
-            if (DataContext is RegisterViewModel viewModel) viewModel.Password1 = Pwd1.Password;
+            if (DataContext is RegisterViewModel viewModel) viewModel.Password = Pwd1.Password;
         }
 
         private void Pwd2_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (DataContext is RegisterViewModel viewModel) viewModel.Password2 = Pwd2.Password;
+            if (DataContext is RegisterViewModel viewModel) viewModel.ConfirmPassword = Pwd2.Password;
         }
 
         private void Btn_BackToMain_Click(object sender, RoutedEventArgs e)
         {
-            var newMain = new MainWindow();
-            newMain.Show();
+            var newMain = Application.Current.Windows
+                .OfType<MainWindow>()
+                .FirstOrDefault();
 
+            if (newMain == null)
+            {
+                newMain = new MainWindow();
+                Application.Current.MainWindow = newMain;
+                newMain.Show(); // make sure mainfram is visible
+            }
+            else
+            {
+                newMain.Show();
+                newMain.Activate();
+            }
+
+            AppNavigator.Navigate(new LoginPage()); // navigate to login page
             this.Close();
         }
     }
