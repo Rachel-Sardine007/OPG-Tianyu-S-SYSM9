@@ -11,12 +11,17 @@
 
   <ItemGroup>
     <None Remove="CountryList.xml" />
+    <None Remove="Views\Pages\SplashImage.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="CountryList.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Pages\SplashImage.png" />
   </ItemGroup>
 	
 </Project>

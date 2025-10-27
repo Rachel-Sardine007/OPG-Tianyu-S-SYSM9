@@ -31,10 +31,8 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster
             // Make the Frame globally available
             AppNavigator.MainFrame = MainFrame;
 
-            MainFrame.Navigate(new LoginPage());
-
-            //// Splashpage for later 
-            //MainFrame.Navigate(new SplashPage());
+            // Load Splashpage 
+            MainFrame.Navigate(new SplashPage());
 
         }
 

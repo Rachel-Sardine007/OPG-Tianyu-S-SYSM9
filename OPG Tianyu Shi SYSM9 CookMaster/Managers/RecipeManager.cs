@@ -24,8 +24,10 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
                 Instructions = "Mix them all like a witch",
                 Category = "Snack/Sweet",
                 Date = DateTime.Now, // change later
-                //CreatedBy = UserManager.UserList[1].Username // accessbility error
+                // CreatedBy = UserManager.UserList[1].Username 
             });
         }
+
+        
     }
 }

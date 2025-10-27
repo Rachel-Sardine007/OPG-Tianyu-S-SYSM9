@@ -8,14 +8,14 @@
       xmlns:viewmodels="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels" xmlns:managers="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Managers"
       d:DataContext="{d:DesignInstance Type=managers:UserManager}"
       mc:Ignorable="d" 
-      d:DesignHeight="200" d:DesignWidth="400"
+      d:DesignHeight="450" d:DesignWidth="800"
       Title="UserPanelPage">
  
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid>
             <StackPanel Orientation="Horizontal">

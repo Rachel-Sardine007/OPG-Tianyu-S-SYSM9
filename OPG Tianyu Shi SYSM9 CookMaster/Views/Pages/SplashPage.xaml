@@ -1,0 +1,20 @@
+﻿<Page x:Class="OPG_Tianyu_Shi_SYSM9_CookMaster.Views.Pages.SplashPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Views.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SplashPage">
+
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <!--Centre Logo-->
+        <Image x:Name="SplashImage" 
+               Source=" C:\Mac\Home\Documents\Csharp101\Inluppg\OPG Tianyu Shi SYSM9 CookMaster\OPG Tianyu Shi SYSM9 CookMaster\Views\Pages\SplashImage.png"
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"
+               Height="200"
+               Opacity="0"/>
+    </Grid>
+</Page>
