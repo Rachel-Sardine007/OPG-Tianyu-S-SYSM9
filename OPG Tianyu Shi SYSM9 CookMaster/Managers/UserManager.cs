@@ -26,6 +26,9 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         {
             _users = new List<User>();
 
+            // Call setDefaultUser()
+            SetDefaultUsers();
+
         }
 
         // Value setting to CurrentUser

@@ -1,6 +1,8 @@
 ﻿using OPG_Tianyu_Shi_SYSM9_CookMaster.Managers;
+using OPG_Tianyu_Shi_SYSM9_CookMaster.Service;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.Views;
+using OPG_Tianyu_Shi_SYSM9_CookMaster.Views.Pages;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,26 +25,21 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster
         {
             InitializeComponent();
             var userManager = (UserManager)Application.Current.Resources["UserManager"];
-            DataContext = new MainViewModel(userManager);
-        }
+            var viewModel = new MainViewModel(userManager);
+            DataContext = viewModel;
 
-        // PasswordBox 
-        private void Pwd_PasswordChanged(object s, RoutedEventArgs e)
-        {
-            if (DataContext is MainViewModel viewModel) viewModel.Password = Pwd.Password;
-        }
+            // Make the Frame globally available
+            AppNavigator.MainFrame = MainFrame;
 
-        private void Btn_Register_Click(object sender, RoutedEventArgs e)
-        {
-            RegisterWindow registerWindow= new RegisterWindow();
-            var oldWindow = Application.Current.MainWindow;
-            oldWindow.Close();
-            registerWindow.Show();
-        }
+            MainFrame.Navigate(new LoginPage());
 
-        private void Btn_Login_Click(object sender, RoutedEventArgs e)
-        {
+            //// Splashpage for later 
+            //MainFrame.Navigate(new SplashPage());
 
         }
+
+
+    
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using OPG_Tianyu_Shi_SYSM9_CookMaster.Managers;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.MVVM;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.Views;
+using OPG_Tianyu_Shi_SYSM9_CookMaster.Views.Pages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
 {
@@ -20,6 +22,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         private string _username;
         private string _password;
         private string _error;
+       
   
         public string Username
         {
@@ -29,6 +32,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 _username = value;
                 OnPropertyChanged();
                 CommandManager.InvalidateRequerySuggested();
+                             
             }
         }
         public string Password

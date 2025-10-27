@@ -14,7 +14,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
     public class RegisterViewModel: ViewModelBase
     {   
         // Property
-        private UserManager _userManager;
+        private readonly UserManager _userManager;
         private string _username { get; set; }
         private string _password1 { get; set; }
         private string _password2 {  get; set; } // re-enter password
