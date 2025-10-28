@@ -33,7 +33,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
             viewModel.OnRegisterSuccess += RegisterViewModel_OnRegisterSuccess;
             
             DataContext = viewModel;
-            LoadCountryList();
+            // LoadCountryList(); // can this method be in bigger scale to be more reuseable? --> fixed with CountryService.cs
             
         }
 
@@ -59,24 +59,24 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
             this.Close();
         }
 
-        // Load CountryList
-        private void LoadCountryList()
-        {
-            var doc = XDocument.Load("C:\\Mac\\Home\\Documents\\Csharp101\\Inluppg\\OPG Tianyu Shi SYSM9 CookMaster\\OPG Tianyu Shi SYSM9 CookMaster\\CountryList.xml");
-            var countryList = from c in doc.Descendants("country")
-                              select new
-                              {
-                                  Name = c.Element("short_desc")?.Value,
-                                  Code = c.Element("country_code")?.Value
+        //// Load CountryList
+        //private void LoadCountryList()
+        //{
+        //    var doc = XDocument.Load("C:\\Mac\\Home\\Documents\\Csharp101\\Inluppg\\OPG Tianyu Shi SYSM9 CookMaster\\OPG Tianyu Shi SYSM9 CookMaster\\CountryList.xml");
+        //    var countryList = from c in doc.Descendants("country")
+        //                      select new
+        //                      {
+        //                          Name = c.Element("short_desc")?.Value,
+        //                          Code = c.Element("country_code")?.Value
 
-                              };
-            Cmb_Country.ItemsSource = countryList.ToList();
-            Cmb_Country.DisplayMemberPath = "Name";
-            Cmb_Country.SelectedValuePath = "Code";
-            // MessageBox to check how many countries are loaded successfully
-            // MessageBox.Show("Loaded countries: " + countryList.Count());
+        //                      };
+        //    Cmb_Country.ItemsSource = countryList.ToList();
+        //    Cmb_Country.DisplayMemberPath = "Name";
+        //    Cmb_Country.SelectedValuePath = "Code";
+        //    // MessageBox to check how many countries are loaded successfully
+        //    // MessageBox.Show("Loaded countries: " + countryList.Count());
 
-        }
+        //}
 
         private void Pwd1_PasswordChanged(object s, RoutedEventArgs e)
         {

@@ -26,8 +26,8 @@ d:DataContext="{d:DesignInstance Type=viewmodels:RegisterViewModel}"
         <ComboBox x:Name="Cmb_Country" Height="20" Width="200" Margin="0,5,0,0"
                   ItemsSource="{Binding CountryList}"
                   DisplayMemberPath="Name"
-                  SelectedValuePath="Code"
-                  SelectedValue="{Binding Country, Mode=TwoWay}"/>
+                  SelectedValuePath="Name"
+                  SelectedValue="{Binding SelectedCountry, Mode=TwoWay}"/>
         <!--button binding-->
         <Button x:Name="Btn_Register" Content="Register" Width="60" Margin="0,20,0,0" 
                 Command="{Binding RegisterCommand}"/>

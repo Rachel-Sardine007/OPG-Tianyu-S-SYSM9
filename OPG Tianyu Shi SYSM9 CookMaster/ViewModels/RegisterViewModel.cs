@@ -1,8 +1,11 @@
 ﻿using OPG_Tianyu_Shi_SYSM9_CookMaster.Managers;
+using OPG_Tianyu_Shi_SYSM9_CookMaster.Models;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.MVVM;
+using OPG_Tianyu_Shi_SYSM9_CookMaster.Service;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +21,10 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         private string _username { get; set; }
         private string _password { get; set; }
         private string _confirmPassword {  get; set; } // re-enter password
-        private string _country { get; set; }
+        private CountryItem _selectedCountry { get; set; } 
         private string _error {  get; set; }
+
+        public ObservableCollection<CountryItem> CountryList { get; } // get CountryList
 
         public string Username
         {
@@ -79,12 +84,12 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             }
         }
 
-        public string Country
+        public CountryItem SelectedCountry // SelectedCountry has two props: name & code
         {
-            get => _country;
+            get => _selectedCountry;
             set
             {
-                _country = value;
+                _selectedCountry = value;
                 OnPropertyChanged();
                 CommandManager.InvalidateRequerySuggested();
             }
@@ -108,6 +113,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         public RegisterViewModel( UserManager userManager)
         {
             _userManager = userManager;
+            CountryList = new ObservableCollection<CountryItem>(CountryService.LoadCountryList());
             RegisterCommand = new RelayCommand(
                 excute => CreateUser(),
                 canExcute => canRegister());
@@ -119,7 +125,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         private bool canRegister()
         {
             if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password)
-            && !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(Country))
+            && !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(SelectedCountry?.Name)) 
             {
                 return true;
             }
@@ -136,7 +142,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             {
                 if (_userManager.ValidatePassword(Password))
                 {
-                    _userManager.Register(Username, Password, Country);
+                    _userManager.Register(Username, Password, SelectedCountry?.Name);
                     OnRegisterSuccess?.Invoke(this, System.EventArgs.Empty);
                     MessageBox.Show("Register successfully!");
                 }

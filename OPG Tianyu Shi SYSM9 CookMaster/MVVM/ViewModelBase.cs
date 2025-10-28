@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace OPG_Tianyu_Shi_SYSM9_CookMaster.MVVM
 {
@@ -16,5 +17,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.MVVM
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
+ 
     }
 }
