@@ -9,11 +9,8 @@ d:DataContext="{d:DesignInstance Type=viewmodels:RegisterViewModel}"
         mc:Ignorable="d"
         Title="RegisterWindow" Height="450" Width="800">
     <ScrollViewer>
-    <StackPanel Margin="20">
-        <StackPanel.Resources>
-        </StackPanel.Resources>
-        
-        <TextBlock Text="New User Register" FontSize="35" TextAlignment="Center"/>
+        <StackPanel Margin="20">
+            <TextBlock Text="New User Register" FontSize="35" TextAlignment="Center"/>
         <TextBlock Text="{Binding Error}" Foreground="Red" TextAlignment="Left" Width="200" Height="30"/>
         <TextBlock Text="Username" TextAlignment="Left" Width="200"/>
         <TextBox Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 

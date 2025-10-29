@@ -36,7 +36,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                     _username = value;
                     OnPropertyChanged();
 
-                    // Call FindUser method to check if username already exists ?? 
+                    // Call FindUser method to check if username already exists 
                     if (_userManager.FindUser(Username))
                     {
                         Error = "Username already exists";
@@ -68,7 +68,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         public string ConfirmPassword
         {
             get => _confirmPassword;
-            set
+            set // ?? Error shows directly and constantly
             {
                 _confirmPassword = value;
                 OnPropertyChanged();
@@ -109,6 +109,9 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             }
         }
 
+        public ICommand RegisterCommand { get; }
+        public event System.EventHandler OnRegisterSuccess;
+
         // Constructor
         public RegisterViewModel( UserManager userManager)
         {
@@ -131,18 +134,28 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             }
                 return false; 
         }
-            
-       
 
-        // ?? Call usermanager methods to check if username already exists and validate password 
+
+        // Method to control password
+        // need to be updated: double check password --> property set
+        public bool ValidatePassword(string password)
+        {
+            if (password.Length >= 8 && password.Any(ch => char.IsUpper(ch)) && password.Any(ch => !char.IsLetterOrDigit(ch)))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        // Call usermanager methods to check if username already exists and validate password 
         // Event Dialog 
         private void CreateUser()
         {
             if (!_userManager.FindUser(Username))
             {
-                if (_userManager.ValidatePassword(Password))
+                if (ValidatePassword(Password))
                 {
-                    _userManager.Register(Username, Password, SelectedCountry?.Name);
+                    _userManager.Register(Username, Password, SelectedCountry);
                     OnRegisterSuccess?.Invoke(this, System.EventArgs.Empty);
                     MessageBox.Show("Register successfully!");
                 }
@@ -155,9 +168,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 
         }
 
-        public ICommand RegisterCommand { get; }
-        public event System.EventHandler OnRegisterSuccess;
-
+        
 
     }
 }

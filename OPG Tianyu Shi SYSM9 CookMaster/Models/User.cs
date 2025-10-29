@@ -10,6 +10,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Models
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public string Country { get; set; }
+        public CountryItem Country { get; set; }
     }
 }

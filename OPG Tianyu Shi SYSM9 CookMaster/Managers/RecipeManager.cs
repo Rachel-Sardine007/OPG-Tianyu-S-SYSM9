@@ -11,12 +11,16 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
 {
     public class RecipeManager: ViewModelBase
     {
+        private readonly UserManager _userManager;
+
         // New ObservableCollection
         public ObservableCollection<Recipe> _recipes { get; set; }
 
-        // 
-        public RecipeManager()
+        // Constructor
+        public RecipeManager(UserManager userManager)
         {
+            _userManager = userManager;
+            var user = _userManager.CurrentUser;
             _recipes = new ObservableCollection<Recipe>();
             _recipes.Add(new Recipe
             {
@@ -26,9 +30,11 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
                 Category = "Snack/Sweet",
                 // Assigns year, month, day, hour, min, seconds, UTC timezone
                 Date = new DateTime(2025, 10, 23, 10, 01, 29, DateTimeKind.Local),
-                //CreatedBy = UserManager.CurrentUser
+                CreatedBy = user // User object 
             });
         }
+
+
 
         
     }

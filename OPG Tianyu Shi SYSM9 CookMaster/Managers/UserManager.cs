@@ -1,5 +1,6 @@
 ﻿using OPG_Tianyu_Shi_SYSM9_CookMaster.Models;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.MVVM;
+using OPG_Tianyu_Shi_SYSM9_CookMaster.Service;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -19,8 +20,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         private User _currentUser;
 
         // public list for reference use later
-        public List<User> UserList {  get { return _users; } }
-        public User Current { get { return _currentUser; } }
+        public List<User> UserList { get { return _users; } }
 
         // Constructor
         public UserManager()
@@ -36,7 +36,8 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         public User CurrentUser
         {
             get => _currentUser;
-            private set {
+            private set
+            {
                 _currentUser = value;
                 OnPropertyChanged(nameof(CurrentUser));
             }
@@ -45,17 +46,23 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         // DefaultUsers
         public void SetDefaultUsers()
         {
+            // Load country list 
+            var countries = CountryService.LoadCountryList();
+            // Find country Items
+            var sweden = countries.FirstOrDefault(c=>c.Name == "Sweden");
+            var china = countries.FirstOrDefault(c => c.Name == "China");
+
             _users.Add(new User
             {
                 Username = "admin",
                 Password = "admin123",
-                Country = "Sweden"
+                Country = sweden
             });
             _users.Add(new User
             {
                 Username = "sardine",
                 Password = "sardine007",
-                Country = "China"
+                Country = china
             });
         }
 
@@ -82,7 +89,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
 
         // Methods for registering new users 
         // Method to add new user information
-        public void Register(string username, string password, string country)
+        public void Register(string username, string password, CountryItem country)
         {
             _users.Add(new User
             {
@@ -93,6 +100,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         }
 
         // Method to check if username already exists and return true if user doesnt exist
+        // Register
         public bool FindUser(string username)
         {
             foreach (var user in _users)
@@ -105,14 +113,26 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
             return false;
         }
 
-        // Method to control password
-        // !! need to be updated: double check password
-        public bool ValidatePassword(string password)
+        
+        // UserDetails update current user info
+        public void UpdateUser(string newUsername, CountryItem newCountry)
         {
-            if (password.Length >= 8 && password.Any(ch => char.IsUpper(ch)) && password.Any(ch => !char.IsLetterOrDigit(ch))){
-                return true;
+            var existingUser = _users.FirstOrDefault(u => u.Username == CurrentUser.Username);
+            if (existingUser != null)
+            {
+                existingUser.Username = newUsername;
+                existingUser.Country = newCountry;
+                CurrentUser = existingUser; // refresh binding 
             }
-            return false;
+        }
+
+        public void ChangePassword(string username, string password)
+        {
+            var existingUser = _users.FirstOrDefault(u => u.Username == username);
+            if (existingUser != null)
+            {
+                existingUser.Password = password;
+            }
         }
     }
 }
