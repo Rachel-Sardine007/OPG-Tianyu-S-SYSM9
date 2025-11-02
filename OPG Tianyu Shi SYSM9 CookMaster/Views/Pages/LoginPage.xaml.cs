@@ -34,8 +34,14 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views.Pages
 
         private void ViewModel_OnLoginSuccess(object? sender, EventArgs e)
         {
-            // Load UserPanelPage
-            AppNavigator.Navigate(new UserPanelPage());
+            //// Load UserPanelPage
+            //AppNavigator.Navigate(new UserPanelPage());
+
+            // Direct to RecipeListWindow 
+            RecipeListWindow recipeListWindow = new RecipeListWindow();
+            var oldWindow = Application.Current.MainWindow;
+            oldWindow.Close();
+            recipeListWindow.Show();
         }
 
         // PasswordBox 

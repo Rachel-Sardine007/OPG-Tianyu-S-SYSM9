@@ -24,7 +24,7 @@ d:DataContext="{d:DesignInstance Type=viewmodels:RegisterViewModel}"
                   ItemsSource="{Binding CountryList}"
                   DisplayMemberPath="Name"
                   SelectedValuePath="Name"
-                  SelectedValue="{Binding SelectedCountry, Mode=TwoWay}"/>
+                  SelectedValue="{Binding SelectedCountry.Name, Mode=TwoWay}"/>
         <!--button binding-->
         <Button x:Name="Btn_Register" Content="Register" Width="60" Margin="0,20,0,0" 
                 Command="{Binding RegisterCommand}"/>

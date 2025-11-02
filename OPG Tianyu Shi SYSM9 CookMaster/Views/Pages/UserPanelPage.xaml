@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Views.Pages" 
       xmlns:mvvm="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.MVVM" 
       xmlns:viewmodels="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels" 
-      xmlns:managers="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Managers"
+      xmlns:managers="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Managers" d:DataContext="{d:DesignInstance Type=viewmodels:UserPanelViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UserPanelPage">
@@ -27,7 +27,7 @@
         <Grid Grid.Row="1">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button Width="90" Height="40" Content="Recipe List" Margin="10,10,10,10"
-                        Command="{Binding ViewRecipeCommand}"/>
+                        Command="{Binding ViewRecipesCommand}"/>
                 <Button Width="90" Height="40" Content="Add Recipe" Margin=" 10,10,10,10"
                         Command="{Binding AddRecipeCommand}"/>
             </StackPanel>

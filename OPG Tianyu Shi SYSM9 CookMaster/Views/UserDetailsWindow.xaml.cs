@@ -37,7 +37,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
 
         private void Vm_OnCancelRequested(object? sender, EventArgs e)
         {
-            ReturnToUserPanel();
+            ReturnToRecipeList();
         }
 
         private void Btn_Edit_Click(object sender, RoutedEventArgs e)
@@ -58,7 +58,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
 
             if (result == MessageBoxResult.OK)
             {
-                ReturnToUserPanel();
+                ReturnToRecipeList();
             }
         }
 
@@ -72,29 +72,22 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
 
             if (result == MessageBoxResult.OK)
             {
-                ReturnToUserPanel();
+                ReturnToRecipeList();
             }
         }
 
-        private void ReturnToUserPanel ()
+        private void ReturnToRecipeList()
         {
-            var newMain = Application.Current.Windows
-                .OfType<MainWindow>()
-                .FirstOrDefault();
-
-            if (newMain == null)
+            var currentWindow = Application.Current.Windows
+                .OfType<Window>()
+                .SingleOrDefault(x => x.IsActive);
+            if (currentWindow != null)
             {
-                newMain = new MainWindow();
-                Application.Current.MainWindow = newMain;
-                newMain.Show(); // make sure mainfram is visible
+                var newWindow = new RecipeListWindow();
+                Application.Current.MainWindow = newWindow;
+                newWindow.Show();
+                currentWindow.Close();
             }
-            else
-            {
-                newMain.Show();
-                newMain.Activate();
-            }
-
-            AppNavigator.Navigate(new UserPanelPage()); // navigate to login page
             this.Close();
         }
 

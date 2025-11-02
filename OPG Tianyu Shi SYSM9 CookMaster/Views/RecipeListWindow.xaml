@@ -3,10 +3,96 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Views"
+        xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Views" 
+        xmlns:managers="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Managers" 
+        xmlns:viewmodels="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:RecipeListViewModel}"
         mc:Ignorable="d"
         Title="RecipeListWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="3*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Image Source="C:\Mac\Home\Documents\Csharp101\Inluppg\OPG Tianyu Shi SYSM9 CookMaster\OPG Tianyu Shi SYSM9 CookMaster\Views\Pages\SplashImage.png"
+                       Width="150" VerticalAlignment="Center" />
+                <Grid Grid.Column="1">
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+
+                        <Button Content="User Details"
+                                Width="100" Height=" 30"
+                                Margin="0,0,10,0" 
+                                Command="{Binding UserCommand}"/>
+                        <Button Content="Sign out"
+                                Width="100" Height="30"
+                                Margin="0,0,10,0"
+                                Command="{Binding SignOutCommand}"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                        <TextBlock Text="Logged in as " Margin="10,0,0,5" />
+                        <TextBlock Text="{Binding CurrentUsername}" Margin="0,0,10,0" />
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <TextBlock Text="Recipe List" Margin="10,0,0,0"
+                               FontSize="20" FontWeight="Medium" />
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="3">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                        <TextBlock Text="Filter by" Margin="10,0,10,0" VerticalAlignment="Center" />
+                        <ComboBox Width="150"
+                           Height="30" 
+                           ItemsSource="{Binding Categories}"
+                           SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <StackPanel Margin="10">
+            <!--Filter row-->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,5">
+                <Button Content="Add Recipe"
+                        Width="100" Height="30"
+                        Margin="10,0,10,0" 
+                        HorizontalAlignment="Right"
+                        Command="{Binding AddRecipeCommand}"/>
+                <Button Content="Recipe Details" Width="100" Height="30" Margin="0,0,10,0" 
+                        Command="{Binding RecipeDetailsCommand}"/>
+                <Button Content="Remove" Width="100" Height="30"
+                        Margin="0,0,10,0"
+                        Command="{Binding RemoveRecipeCommand}"/>
+                
+            </StackPanel>
+
+            <DataGrid ItemsSource="{Binding Recipes}"
+                      SelectedItem="{Binding SelectedRecipe}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      GridLinesVisibility="None"
+                      RowHeight="30"
+                      HeadersVisibility="Column"
+                      SelectionMode="Single"
+                      Margin="10,10,10,5">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Title" Width="2*" Binding="{Binding Title}"/>
+                    <DataGridTextColumn Header="Category" Width="*" Binding="{Binding Category}"/>
+                    <DataGridTextColumn Header="Created by" Width="*" Binding="{Binding CreatedBy}"/>
+                    <DataGridTextColumn Header="Date" Width="1.5*" Binding="{Binding Date}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </DockPanel>
 </Window>

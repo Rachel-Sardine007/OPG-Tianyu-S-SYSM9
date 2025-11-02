@@ -22,8 +22,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         private string _username;
         private string _password;
         private string _error;
-       
-  
+
         public string Username
         {
             get => _username;

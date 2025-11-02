@@ -4,9 +4,39 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Views"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+        xmlns:viewmodels="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AddRecipeViewModel}"
         mc:Ignorable="d"
         Title="AddRecipeWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1" Margin="20">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="0,5,0,5"/>
+                </Style>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="100"/>
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock Text="Add Recipe" FontSize="25"/>
+            <TextBlock Text="{Binding Error}" Foreground="Red"/>
+            <TextBlock Text="Title"/>
+            <TextBox Text="{Binding Title}"/>
+            <TextBlock Text="Ingredients"/>
+            <TextBox Text="{Binding Ingredients}"/>
+            <TextBlock Text="Instruction"/>
+            <TextBox Text="{Binding Instructions}"/>
+            <TextBlock Text="Category"/>
+            <TextBox Text="{Binding Category}"/>
+            <TextBlock Text="Date"/>
+            <DatePicker Margin="0,5,0,5" Text="{Binding SelectedDate}"/>
+            <Button Content="Add" Margin="0,5,0,5" Command="{Binding AddCommand}"/>
+            <Button Content="Cancel" Margin="0,5,0,5" Command="{Binding CancelCommand}"/>
+        </StackPanel>
     </Grid>
 </Window>

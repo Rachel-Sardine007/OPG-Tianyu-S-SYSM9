@@ -39,7 +39,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 var recipeWindow = new RecipeListWindow();
                 oldWindow.Close(); 
                 recipeWindow.Show();
-                
             });
 
             AddRecipeCommand = new RelayCommand(_ =>
@@ -48,7 +47,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 var addRecipeWindow = new AddRecipeWindow();
                 oldWindow.Close();
                 addRecipeWindow.Show();
-
             });
 
             ViewUserCommand = new RelayCommand(_ =>
