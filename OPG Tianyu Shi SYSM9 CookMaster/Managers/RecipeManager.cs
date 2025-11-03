@@ -55,66 +55,83 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         public RecipeManager(UserManager userManager)
         {
             _userManager = userManager;
-            var user = _userManager.CurrentUser;
             _recipes = new ObservableCollection<Recipe>();
+        }
+
+        public void LoadDefaultRecipes()
+        {
+            var CurrentUser = _userManager.CurrentUser;
+
+            _recipes = new ObservableCollection<Recipe>();
+
             _recipes.Add(new Recipe
-            {
-                Title = "Banana Pancake",
-                Ingredients = "Flour 100g, banana 2st, egg 1st, water 80g",
-                Instructions = "Mix them all like a witch",
-                Category = "Snack/Sweet",
-                // Assigns year, month, day, hour, min, seconds, UTC timezone
-                Date = new DateTime(2025, 10, 23, 10, 01, 29, DateTimeKind.Local),
-                CreatedBy = "sardine"
+                {
+                    Title = "Banana Pancake",
+                    Ingredients = "Flour 100g, banana 2st, egg 1st, water 80g",
+                    Instructions = "Mix them all like a witch",
+                    Category = "Snack/Sweet",
+                    // Assigns year, month, day, hour, min, seconds, UTC timezone
+                    Date = new DateTime(2025, 10, 23, 10, 01, 29, DateTimeKind.Local),
+                    CreatedBy = _userManager.UserList[1].Username,
             });
+            
+         
+                _recipes.Add(new Recipe
+                {
+                    Title = "Spaghetti Carbonara",
+                    Ingredients = "Spaghetti, egg, cheese, bacon, pepper",
+                    Instructions = "Cook pasta, mix ingredients.",
+                    Category = "Main Course",
+                    Date = DateTime.Now,
+                    CreatedBy = _userManager.UserList[2].Username, // can be more flexible if based on unique userID
+                });
+
             _recipes.Add(new Recipe
             {
-                Title = "Spaghetti Carbonara",
-                Ingredients = "Spaghetti, egg, cheese, bacon, pepper",
-                Instructions = "Cook pasta, mix ingredients.",
+                Title = "Pan fried beef steak",
+                Ingredients = "Beef, butter, garlic",
+                Instructions = "Pan fry both side of the steak for 1 min with butter and garlic. Don't let Chef Gordon down",
                 Category = "Main Course",
                 Date = DateTime.Now,
-                CreatedBy = "admin"
+                CreatedBy = _userManager.UserList[2].Username,
             });
-
+            
         }
 
         // Show recipe
-        public ObservableCollection<Recipe> ShowRecipe()
+        public IEnumerable<Recipe> ShowRecipe()
         {
-            string currentUsername = _userManager.CurrentUser.Username;
+            var user = _userManager.CurrentUser;
 
-            if (currentUsername == "admin")
-                return Recipes;
-            
+            if (user.Username == "admin")
+                return _recipes;
 
-            // Filter by CreatedBy
-            var userRecipes = _recipes
-                .Where(r=> string.Equals(r.CreatedBy, currentUsername, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-
-            return new ObservableCollection<Recipe>(userRecipes);
+            // Filter by OwnerId
+            return _recipes.Where(r => r.CreatedBy == user.Username);
         }
         
-        public void AddRecipe(Recipe recipe)
+        public void AddRecipe(string title,string ingredients, string instructions, string Category)
         {
-            _recipes.Add(recipe);
+            _recipes.Add(new Recipe
+            {
+                Title = title,
+                Ingredients = ingredients,
+                Instructions = instructions,
+                Category = Category,
+                Date = DateTime.Now,
+                CreatedBy = _userManager.CurrentUser.Username,
+                OwnerId = _userManager.CurrentUser.Id
+            });
         }
 
-
-        //public void UpdateRecipe(Recipe updatedRecipe)
-        //{
-        //    var existingRecipe = _recipes.FirstOrDefault(r => r.Title == updatedRecipe.Title);
-        //    if (existingRecipe != null)
-        //    {
-        //        existingRecipe.Title = updatedRecipe.Title;
-        //        existingRecipe.Ingredients = updatedRecipe.Ingredients;
-        //        existingRecipe.Instructions = updatedRecipe.Instructions;
-        //        existingRecipe.Category = updatedRecipe.Category;
-        //        existingRecipe.Date = updatedRecipe.Date;
-        //    }
-        //}
-
-
+        // Update CreatedBy if username changes
+        public void UpdateCreatedBy(string oldUsername, string newUsername)
+        {
+            foreach (var r in _recipes
+                .Where(r => r.CreatedBy == oldUsername))
+            {
+                r.CreatedBy = newUsername;   
+            }
+        }
     }
 }

@@ -29,7 +29,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster
             var viewModel = new MainViewModel(userManager);
             DataContext = viewModel;
 
-
             // Make the Frame globally available
             AppNavigator.MainFrame = MainFrame;
             // Load Splashpage as the first page

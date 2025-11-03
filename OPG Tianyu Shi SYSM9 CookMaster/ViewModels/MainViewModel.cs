@@ -30,7 +30,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             {
                 _username = value;
                 OnPropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
+                CommandManager.InvalidateRequerySuggested(); // re-evaluate canExcute();
                              
             }
         }
@@ -74,6 +74,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         {
             if (_userManager.Login(Username, Password))
             {
+                
                 OnLoginSuccess?.Invoke(this, System.EventArgs.Empty);
             }
             else
@@ -82,7 +83,5 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             }
 
         }
-
-
     }
 }

@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Views" xmlns:viewmodels="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:RecipeDetailsViewModel}"
+        xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Views" 
+        xmlns:viewmodels="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels" 
         mc:Ignorable="d"
         Title="RecipeDetailsWindow" Height="450" Width="800">
     <Grid>
@@ -29,9 +30,10 @@
             <TextBlock Text="Ingredients"/>
             <TextBox x:Name="Txb_Ing" Text="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Instruction"/>
-            <TextBox x:Name="Txb_Ins" Text="{Binding Instructions, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox x:Name="Txb_Ins" Text="{Binding Instructions, UpdateSourceTrigger=PropertyChanged}"
+                     Height="50"/>
             <TextBlock Text="Category"/>
-            <TextBox Text="{Binding Category}"/>
+            <TextBox Text="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock x:Name="Txb_Category" Text="Date"/>
             <DatePicker x:Name="Txb_Date" Margin="0,5,0,5" Text="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>

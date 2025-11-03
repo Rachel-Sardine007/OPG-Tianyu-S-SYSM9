@@ -76,7 +76,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 CommandManager.InvalidateRequerySuggested();
             } 
         }
-        public string CreatedBy { get => _createdBy; set { _createdBy = CurrentUsername; } }
         public string Error
         {
             get => _error;
@@ -93,7 +92,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         public ICommand CancelCommand { get; }
 
         // Constructor
-        public AddRecipeViewModel(RecipeManager recipeManager)
+        public AddRecipeViewModel(RecipeManager recipeManager, UserManager userManager)
         {
             var recipes = new ObservableCollection<Recipe>();
             AddCommand = new RelayCommand(_ => AddRecipe(Title, Ingredients, Instructions, Category, SelectedDate, CurrentUsername), 

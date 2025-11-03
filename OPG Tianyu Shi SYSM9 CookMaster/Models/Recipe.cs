@@ -14,6 +14,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Models
         public string Instructions {  get; set; }
         public string Category { get; set; }
         public DateTime Date { get; set; }
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; set; } // for display
+        public Guid OwnerId { get; set; } // for filtering
     }
 }

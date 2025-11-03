@@ -22,25 +22,23 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         // public list for reference use later
         public List<User> UserList { get { return _users; } }
 
-        // Constructor
-        public UserManager()
-        {
-            _users = new List<User>();
-
-            // Call setDefaultUser()
-            SetDefaultUsers();
-
-        }
-
-        // Value setting to CurrentUser
         public User CurrentUser
         {
             get => _currentUser;
             private set
             {
                 _currentUser = value;
-                OnPropertyChanged(nameof(CurrentUser));
+                OnPropertyChanged();
             }
+        }
+
+        // Constructor
+        public UserManager()
+        {
+            _users = new List<User>();
+            // Call setDefaultUser() to add users
+            SetDefaultUsers();
+
         }
 
         // DefaultUsers
@@ -49,21 +47,35 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
             // Load country list 
             var countries = CountryService.LoadCountryList();
             // Find country Items
-            var sweden = countries.FirstOrDefault(c=>c.Name == "Sweden");
+            // var sweden = countries.FirstOrDefault(c=>c.Name == "Sweden");
             var china = countries.FirstOrDefault(c => c.Name == "China");
 
             _users.Add(new User
             {
                 Username = "admin",
-                Password = "admin123",
-                Country = sweden
+                Password = "password",
+                Country = new CountryItem { Name="Sweden"},
+                Id = Guid.NewGuid()
             });
-            _users.Add(new User
+
+            var sardine = new User
             {
                 Username = "sardine",
                 Password = "sardine007",
-                Country = china
-            });
+                Country = china,
+                Id = Guid.NewGuid()
+            };
+            var user = new User
+            {
+                Username = "user",
+                Password = "password",
+                Country = new CountryItem { Name="Norway"},
+                Id = Guid.NewGuid()
+            };
+
+            _users.Add(sardine);
+            _users.Add(user);
+
         }
 
         // Method to check login status and return true of false
@@ -82,10 +94,8 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         }
 
         // Logout method
-        public void Logout()
-        {
-            CurrentUser = null;
-        }
+        public void Logout() => CurrentUser = null;
+       
 
         // Methods for registering new users 
         // Method to add new user information
@@ -100,7 +110,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         }
 
         // Method to check if username already exists and return true if user doesnt exist
-        // Register
+        // RegisterViewModel
         public bool FindUser(string username)
         {
             foreach (var user in _users)
@@ -113,19 +123,19 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
             return false;
         }
 
-        
+
         // UserDetails update current user info
-        public void UpdateUser(string newUsername, CountryItem newCountry)
+        // for persistence only 
+        public void UpdateUser(string newUsername)
         {
-            var existingUser = _users.FirstOrDefault(u => u.Username == CurrentUser.Username);
-            if (existingUser != null)
+            if (CurrentUser != null)
             {
-                existingUser.Username = newUsername;
-                existingUser.Country = newCountry;
-                CurrentUser = existingUser; // refresh binding 
+                CurrentUser.Username = newUsername;
             }
+            
         }
 
+        // for persistence only 
         public void ChangePassword(string username, string password)
         {
             var existingUser = _users.FirstOrDefault(u => u.Username == username);

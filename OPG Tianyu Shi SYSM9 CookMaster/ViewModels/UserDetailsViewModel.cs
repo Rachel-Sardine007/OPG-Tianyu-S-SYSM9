@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,6 +20,8 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
     {
         // Get current user info
         private readonly UserManager _userManager;
+        private readonly RecipeManager _recipeManager;
+        public User CurrentUser => _userManager.CurrentUser;
 
         // Editable fields
         private string _username;
@@ -31,11 +34,10 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         public string Username
         {
             get => _username;
-            set { 
+            set {
                 _username = value;
-                OnPropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            }
+                    OnPropertyChanged();
+                }
         }
 
         public CountryItem SelectedCountry
@@ -44,19 +46,17 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             set
             {
                 _selectedCountry = value;
-                OnPropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
+                    OnPropertyChanged();
             }
         }
 
         public string CurrentPassword
         {
-            get { return _currentPassword; }
+            get => _currentPassword;
             set
-            {
-                _currentPassword = value;
-                OnPropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
+            { 
+                    _currentPassword = value;
+                    OnPropertyChanged(); 
             }
         }
 
@@ -67,7 +67,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             {
                 _newPassword = value;
                 OnPropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
+                // CommandManager.InvalidateRequerySuggested();
             }
         }
 
@@ -78,7 +78,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             {
                 _confirmPassword = value;
                 OnPropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
+                // CommandManager.InvalidateRequerySuggested();
             }
         }
 
@@ -99,18 +99,16 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
 
 
         // Constructor
-        public UserDetailsViewModel(UserManager userManager)
+        public UserDetailsViewModel(UserManager userManager, RecipeManager recipeManager)
         {
             _userManager = userManager;
+            _recipeManager = recipeManager;
             CountryList = new ObservableCollection<CountryItem>(CountryService.LoadCountryList());
-            var user = _userManager.CurrentUser;
-            
-            // Display current user values
-            Username = user.Username;
-            SelectedCountry = user.Country;
 
-            CurrentPassword = user.Password;
-
+            // Display current user info
+            Username = CurrentUser.Username;
+            SelectedCountry = CurrentUser.Country;
+         
             SaveCommand = new RelayCommand(_ => SaveChanges(), _ => CanSave());
             CancelCommand = new RelayCommand(_ => Cancel());
             ChangePasswordCommand = new RelayCommand(_ => ChangePassword(), _ => CanChangePassword());
@@ -127,40 +125,37 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             return false;
         }
 
-        private void ChangePassword() 
+        private void ChangePassword()
         {
-            var user = _userManager.CurrentUser;
-            if (user.Password == CurrentPassword)
-            {
-                if (NewPassword.Length >= 5)
-                {
-                    if (NewPassword == ConfirmPassword)
-                    {
-                        Error = string.Empty;
-                        // call change password method 
-                        _userManager.ChangePassword(Username, NewPassword);
-                        OnPasswordChanged?.Invoke(this, EventArgs.Empty);
-                    }
-                    else
-                    {
-                        Error = "Passwords do not match!";
-                    }
-                }
-                else
-                {
-                    Error = "Password must be more than 5 character long.";
-                }
-            }
-            else
+            if (CurrentUser.Password != CurrentPassword)
             {
                 Error = "Current Password incorrect!";
+                return;
             }
+            if (CurrentPassword == NewPassword) {
+                Error = "New password cannot be the same!";
+                return;
+            }
+            if (NewPassword.Length < 5)
+            {
+                Error = "Password must be more than 5 character long.";
+                return;
+            }
+            if (NewPassword != ConfirmPassword)
+            {
+                Error = "Passwords do not match!";
+                return;
+            }
+
+            CurrentUser.Password = NewPassword;
+            Error = string.Empty;
+            OnPasswordChanged?.Invoke(this, EventArgs.Empty);
         }
         
 
         private bool CanSave()
         {
-            if ( !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(SelectedCountry.Name))
+            if ( !string.IsNullOrWhiteSpace(Username) && SelectedCountry!=null && !string.IsNullOrWhiteSpace(SelectedCountry.Name))
             {
                 return true;
             }
@@ -172,40 +167,30 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         // ?? save country information 
         private void SaveChanges()
         {
-            var user = _userManager.CurrentUser;
-            if (user.Username == Username) // if username stays the same but country different 
+            
+            if (CurrentUser.Username != Username) 
             {
-                Error = string.Empty;
-                // Call userManager updateUser method
-                _userManager.UpdateUser(Username, SelectedCountry);
-
-                // Trigger event 
-                OnSaveSuccess?.Invoke(this, EventArgs.Empty);
-            }
-            else
-            {
-                if (!_userManager.FindUser(Username))
-                {
-                    if (Username.Length >= 3)
-                    {
-                        Error = string.Empty;
-                        // Call userManager updateUser method
-                        _userManager.UpdateUser(Username, SelectedCountry);
-
-                        // Trigger event 
-                        OnSaveSuccess?.Invoke(this, EventArgs.Empty);
-                    }
-                    else
-                    {
-                        Error = "Username must be over 3 character long.";
-                    }
-                }
-                else
+                if (_userManager.FindUser(Username))
                 {
                     Error = "Username already exists!";
+                    return;
                 }
+   
+                if (Username.Length < 3)
+                {
+                    Error = "Username must be over 3 character long.";
+                    return;
+                }
+
+                string oldUsername = CurrentUser.Username;
+                string newUsername = Username;
+                CurrentUser.Username = newUsername;
+                _recipeManager.UpdateCreatedBy(oldUsername, newUsername);
             }
-            
+            CurrentUser.Country = SelectedCountry;
+            Error = string.Empty;
+            // Trigger event 
+            OnSaveSuccess?.Invoke(this, EventArgs.Empty);
         }
 
         public event System.EventHandler OnCancelRequested;

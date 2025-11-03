@@ -41,7 +41,8 @@
                 <Grid Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right">
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                         <TextBlock Text="Logged in as " Margin="10,0,0,5" />
-                        <TextBlock Text="{Binding CurrentUsername}" Margin="0,0,10,0" />
+                        <TextBlock Text="{Binding CurrentUser.Username}" Margin="0,0,10,0" 
+                                   FontWeight="Medium"/>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">

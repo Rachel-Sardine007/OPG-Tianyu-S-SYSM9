@@ -6,5 +6,6 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <Managers:UserManager x:Key="UserManager"/>
+        <Managers:RecipeManager x:Key="RecipeManager"/>
     </Application.Resources>
 </Application>

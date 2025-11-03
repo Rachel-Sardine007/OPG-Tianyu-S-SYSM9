@@ -21,7 +21,9 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
 {
     public class RecipeListViewModel:ViewModelBase
     {
+        private readonly UserManager _userManager;
         private readonly RecipeManager _recipeManager; 
+        public User CurrentUser => _userManager.CurrentUser;
 
         public ObservableCollection<Recipe> Recipes { get; set; }
 
@@ -78,10 +80,13 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         // CollectionView for filtering
         public ICollectionView RecipesView {  get; }
 
-        public RecipeListViewModel(RecipeManager recipeManager)
+        public RecipeListViewModel(RecipeManager recipeManager, UserManager userManager)
         {
             _recipeManager = recipeManager;
-            Recipes = new ObservableCollection<Recipe>(_recipeManager.ShowRecipe());
+            _userManager = userManager;
+            _recipeManager.LoadDefaultRecipes();
+            LoadRecipes();
+           
             RecipesView= CollectionViewSource.GetDefaultView(Recipes);
 
             UserCommand = new RelayCommand(execute =>
@@ -131,6 +136,12 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                     currentWindow.Close();
                 }
             });
+        }
+
+        private void LoadRecipes()
+        {
+            var userRecipes = _recipeManager.ShowRecipe();
+            Recipes = new ObservableCollection<Recipe>(userRecipes);
         }
 
         private void OpenDetails()

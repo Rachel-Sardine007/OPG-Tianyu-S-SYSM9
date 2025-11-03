@@ -3,6 +3,7 @@ using OPG_Tianyu_Shi_SYSM9_CookMaster.Models;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.MVVM;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
     public class RecipeDetailsViewModel : ViewModelBase
     {
         private readonly RecipeManager _recipeManager;
-
         private Recipe _selectedRecipe;
         private string _error;
 
