@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster" 
              xmlns:Managers="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Managers"
-             StartupUri="MainWindow.xaml">
+             >
     <Application.Resources>
-        <Managers:UserManager x:Key="UserManager"/>
-        <Managers:RecipeManager x:Key="RecipeManager"/>
+
     </Application.Resources>
 </Application>

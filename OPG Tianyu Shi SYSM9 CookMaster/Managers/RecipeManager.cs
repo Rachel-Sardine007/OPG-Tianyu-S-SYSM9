@@ -93,6 +93,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         {
             var user = _userManager.CurrentUser;
             if (user == null) return;
+
             if (user.Username == "admin")
             {
                 _userRecipes = new ObservableCollection<Recipe>(_recipes);

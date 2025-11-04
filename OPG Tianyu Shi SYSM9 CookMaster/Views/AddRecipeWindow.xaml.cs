@@ -24,8 +24,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
         public AddRecipeWindow()
         {
             InitializeComponent();
-            var userManager = (UserManager)Application.Current.Resources["UserManager"];
-            var recipeManager = new RecipeManager(userManager);
+            var recipeManager = (RecipeManager)Application.Current.Resources["RecipeManager"];
             var vm = new AddRecipeViewModel(recipeManager);
             DataContext = vm;
             vm.OnCancelRequested += Vm_OnCancelRequested;
