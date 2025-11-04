@@ -26,9 +26,10 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
             InitializeComponent();
             var userManager = (UserManager)Application.Current.Resources["UserManager"];
             var recipeManager = new RecipeManager(userManager);
-            var vm = new AddRecipeViewModel(recipeManager, userManager);
+            var vm = new AddRecipeViewModel(recipeManager);
             DataContext = vm;
             vm.OnCancelRequested += Vm_OnCancelRequested;
+            vm.OnAddRecipeSuccess += Vm_OnCancelRequested;
 
         }
 

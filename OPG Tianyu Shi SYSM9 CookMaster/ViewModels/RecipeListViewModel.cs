@@ -22,10 +22,14 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
     public class RecipeListViewModel:ViewModelBase
     {
         private readonly UserManager _userManager;
-        private readonly RecipeManager _recipeManager; 
-        public User CurrentUser => _userManager.CurrentUser;
+        private readonly RecipeManager _recipeManager;
+        private ObservableCollection<Recipe> _recipes;
+        public ObservableCollection<Recipe> Recipes
+        {
+            get => _recipeManager.UserRecipes;
+        }
 
-        public ObservableCollection<Recipe> Recipes { get; set; }
+        public ObservableCollection<string> CategoryList => _recipeManager.Categories; // UI binding
 
         private Recipe _selectedRecipe;
         public Recipe SelectedRecipe
@@ -37,8 +41,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        public ObservableCollection<string> Categories => _recipeManager.Categories;
 
         private string _selectedCategory;
         public string SelectedCategory
@@ -80,11 +82,13 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         // CollectionView for filtering
         public ICollectionView RecipesView {  get; }
 
+        public User CurrentUser => _userManager.CurrentUser; // UI binding
+
         public RecipeListViewModel(RecipeManager recipeManager, UserManager userManager)
         {
             _recipeManager = recipeManager;
             _userManager = userManager;
-            _recipeManager.LoadDefaultRecipes();
+
             LoadRecipes();
            
             RecipesView= CollectionViewSource.GetDefaultView(Recipes);
@@ -140,8 +144,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
 
         private void LoadRecipes()
         {
-            var userRecipes = _recipeManager.ShowRecipe();
-            Recipes = new ObservableCollection<Recipe>(userRecipes);
+           _recipeManager.ShowRecipe();
         }
 
         private void OpenDetails()
@@ -160,7 +163,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
 
         private void RemoveRecipe()
         {
-            Recipes.Remove(SelectedRecipe);
+            _recipes.Remove(SelectedRecipe);
         }
 
     }

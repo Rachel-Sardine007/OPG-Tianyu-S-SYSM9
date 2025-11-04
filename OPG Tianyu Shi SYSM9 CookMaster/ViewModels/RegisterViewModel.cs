@@ -53,7 +53,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 }
             }
         }
-
         public string Password
         {
             get => _password;
@@ -64,7 +63,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 CommandManager.InvalidateRequerySuggested();
             }
         }
-
         public string ConfirmPassword
         {
             get => _confirmPassword;
@@ -103,7 +101,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 if (_error != value)
                 {
                     _error = value;
-
                     OnPropertyChanged();
                 }
             }
@@ -119,13 +116,13 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             CountryList = new ObservableCollection<CountryItem>(CountryService.LoadCountryList());
             RegisterCommand = new RelayCommand(
                 excute => CreateUser(),
-                canExcute => canRegister());
+                canExcute => CanRegister());
 
 
         }
 
         // Control blank space
-        private bool canRegister()
+        private bool CanRegister()
         {
             if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password)
             && !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(SelectedCountry?.Name)) 

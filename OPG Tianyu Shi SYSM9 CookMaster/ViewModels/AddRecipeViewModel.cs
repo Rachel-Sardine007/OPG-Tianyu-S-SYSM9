@@ -17,15 +17,12 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
 {
     public class AddRecipeViewModel: ViewModelBase
     {
-        private readonly UserManager _userManager;
         private readonly RecipeManager _recipeManager;
         private string _title;
         private string _ingredients;
         private string _instructions;
         private string _category;
-        private DateTime _selectedDate;
-        private string _createdBy;
-        private string _error;
+        private DateTime _selectedDate = DateTime.Now; 
         
         public string Title
         {
@@ -66,36 +63,28 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 CommandManager.InvalidateRequerySuggested();
             } 
         }
-        public DateTime SelectedDate 
-        { 
-            get => _selectedDate; 
-            set 
-            {
-                _selectedDate = value;
-                OnPropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
-            } 
-        }
-        public string Error
+        public DateTime SelectedDate
         {
-            get => _error;
+            get => _selectedDate;
             set
             {
-                _error = value;
-                OnPropertyChanged();
+                if (_selectedDate != value)
+                {
+                    _selectedDate = value;
+                    OnPropertyChanged();
+                    CommandManager.InvalidateRequerySuggested();
+                }
             }
         }
-        public string CurrentUsername => _userManager.CurrentUser.Username;
-        public ObservableCollection<Recipe> RecipeList => _recipeManager.Recipes;
 
         public ICommand AddCommand { get; }
         public ICommand CancelCommand { get; }
 
         // Constructor
-        public AddRecipeViewModel(RecipeManager recipeManager, UserManager userManager)
+        public AddRecipeViewModel(RecipeManager recipeManager)
         {
-            var recipes = new ObservableCollection<Recipe>();
-            AddCommand = new RelayCommand(_ => AddRecipe(Title, Ingredients, Instructions, Category, SelectedDate, CurrentUsername), 
+            _recipeManager = recipeManager;
+            AddCommand = new RelayCommand(_ => AddRecipe(), 
                 canExecute => CanAdd());
             CancelCommand = new RelayCommand(_ => Cancel());
         }
@@ -108,26 +97,20 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
 
         private bool CanAdd()
         {
-            if( !string.IsNullOrWhiteSpace(Title) && !string.IsNullOrWhiteSpace(Ingredients)
+            if (!string.IsNullOrWhiteSpace(Title) && !string.IsNullOrWhiteSpace(Ingredients)
                 && !string.IsNullOrWhiteSpace(Instructions))
             {
                 return true;
             }
-            Error = "All blank has to be filled!";
-            return false;
+                return false;
         }
 
-        private void AddRecipe(string title, string ingredients, string instructions, string category, DateTime selectedDate, string username)
+        public event System.EventHandler OnAddRecipeSuccess;
+        private void AddRecipe()
         {
-            RecipeList.Add(new Recipe
-            {
-                Title = title,
-                Ingredients = ingredients,
-                Instructions = instructions,
-                Category = category,
-                Date = selectedDate,
-                CreatedBy = username
-            });
+            _recipeManager.AddRecipe(Title,Ingredients,Instructions,Category,SelectedDate);
+            MessageBox.Show("New recipe added!");
+            OnAddRecipeSuccess?.Invoke(this, System.EventArgs.Empty);
         }
     }
 }

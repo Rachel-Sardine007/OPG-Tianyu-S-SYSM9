@@ -95,7 +95,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
 
         // Logout method
         public void Logout() => CurrentUser = null;
-       
 
         // Methods for registering new users 
         // Method to add new user information

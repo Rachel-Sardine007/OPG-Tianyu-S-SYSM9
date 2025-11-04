@@ -14,7 +14,17 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="1" Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="1" Margin="10" Orientation="Horizontal">
+            <TextBlock Text="Add Recipe" FontSize="25" VerticalAlignment="Center"/>
+            <Image Source="C:\Mac\Home\Documents\Csharp101\Inluppg\OPG Tianyu Shi SYSM9 CookMaster\OPG Tianyu Shi SYSM9 CookMaster\Views\Pages\SplashImage.png"
+            Width="150" VerticalAlignment="Center" Margin="100,0,0,0"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="10">
             <StackPanel.Resources>
                 <Style TargetType="TextBlock">
                     <Setter Property="Margin" Value="0,5,0,5"/>
@@ -23,8 +33,8 @@
                     <Setter Property="Width" Value="100"/>
                 </Style>
             </StackPanel.Resources>
-            <TextBlock Text="Add Recipe" FontSize="25"/>
-            <TextBlock Text="{Binding Error}" Foreground="Red"/>
+            
+            <!--<TextBlock Text="{Binding Error}" Foreground="Red"/>-->
             <TextBlock Text="Title"/>
             <TextBox Text="{Binding Title}"/>
             <TextBlock Text="Ingredients"/>
@@ -34,7 +44,7 @@
             <TextBlock Text="Category"/>
             <TextBox Text="{Binding Category}"/>
             <TextBlock Text="Date"/>
-            <DatePicker Margin="0,5,0,5" Text="{Binding SelectedDate}"/>
+            <DatePicker Margin="0,5,0,5" Text="{Binding SelectedDate,Mode=TwoWay}" />
             <Button Content="Add" Margin="0,5,0,5" Command="{Binding AddCommand}"/>
             <Button Content="Cancel" Margin="0,5,0,5" Command="{Binding CancelCommand}"/>
         </StackPanel>

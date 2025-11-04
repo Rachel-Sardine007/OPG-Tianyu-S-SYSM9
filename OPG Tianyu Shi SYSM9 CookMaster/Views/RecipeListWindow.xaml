@@ -27,7 +27,6 @@
                        Width="150" VerticalAlignment="Center" />
                 <Grid Grid.Column="1">
                     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-
                         <Button Content="User Details"
                                 Width="100" Height=" 30"
                                 Margin="0,0,10,0" 
@@ -54,7 +53,7 @@
                         <TextBlock Text="Filter by" Margin="10,0,10,0" VerticalAlignment="Center" />
                         <ComboBox Width="150"
                            Height="30" 
-                           ItemsSource="{Binding Categories}"
+                           ItemsSource="{Binding CategoryList}"
                            SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"/>
                     </StackPanel>
                 </Grid>

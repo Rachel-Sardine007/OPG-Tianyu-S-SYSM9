@@ -14,24 +14,14 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
     {
         private readonly UserManager _userManager;
         private ObservableCollection<Recipe> _recipes;
-        private Recipe _selectedRecipe;
-
-        public ObservableCollection<Recipe> Recipes
+        private ObservableCollection<Recipe> _userRecipes;
+        public ObservableCollection<Recipe> Recipes => _recipes;
+        public ObservableCollection<Recipe> UserRecipes
         {
-            get => _recipes;
-            private set
+            get => _userRecipes;
+            set
             {
-                _recipes = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public Recipe SelectedRecipe
-        {
-            get => _selectedRecipe;
-            private set
-            {
-                _selectedRecipe = value;
+                _userRecipes = value;
                 OnPropertyChanged();
             }
         }
@@ -41,13 +31,17 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         {
             get
             {
-                var uniqueCategories = _recipes
+                var uniqueCategories = UserRecipes
                     .Select(r => r.Category)
                     .Distinct()
                     .OrderBy(c => c)
                     .ToList();
                 uniqueCategories.Insert(0, "All");
                 return new ObservableCollection<string>(uniqueCategories);
+            }
+            set
+            {
+                OnPropertyChanged();
             }
         }
 
@@ -56,14 +50,12 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
         {
             _userManager = userManager;
             _recipes = new ObservableCollection<Recipe>();
+            
+            LoadDefaultRecipes();
         }
 
         public void LoadDefaultRecipes()
         {
-            var CurrentUser = _userManager.CurrentUser;
-
-            _recipes = new ObservableCollection<Recipe>();
-
             _recipes.Add(new Recipe
                 {
                     Title = "Banana Pancake",
@@ -75,16 +67,15 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
                     CreatedBy = _userManager.UserList[1].Username,
             });
             
-         
-                _recipes.Add(new Recipe
-                {
-                    Title = "Spaghetti Carbonara",
-                    Ingredients = "Spaghetti, egg, cheese, bacon, pepper",
-                    Instructions = "Cook pasta, mix ingredients.",
-                    Category = "Main Course",
-                    Date = DateTime.Now,
-                    CreatedBy = _userManager.UserList[2].Username, // can be more flexible if based on unique userID
-                });
+            _recipes.Add(new Recipe
+            {
+                Title = "Spaghetti Carbonara",
+                Ingredients = "Spaghetti, egg, cheese, bacon, pepper",
+                Instructions = "Cook pasta, mix ingredients.",
+                Category = "Main Course",
+                Date = DateTime.Now,
+                CreatedBy = _userManager.UserList[2].Username, // can be more flexible if based on unique userID
+            });
 
             _recipes.Add(new Recipe
             {
@@ -95,39 +86,45 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
                 Date = DateTime.Now,
                 CreatedBy = _userManager.UserList[2].Username,
             });
-            
         }
 
         // Show recipe
-        public IEnumerable<Recipe> ShowRecipe()
+        public void ShowRecipe()
         {
             var user = _userManager.CurrentUser;
-
+            if (user == null) return;
             if (user.Username == "admin")
-                return _recipes;
-
-            // Filter by OwnerId
-            return _recipes.Where(r => r.CreatedBy == user.Username);
+            {
+                _userRecipes = new ObservableCollection<Recipe>(_recipes);
+            }
+            else
+            {
+                // Filter by username
+                _userRecipes = new ObservableCollection<Recipe>(_recipes
+                    .Where(r => r.CreatedBy == user.Username));
+            }
         }
-        
-        public void AddRecipe(string title,string ingredients, string instructions, string Category)
+
+        public void AddRecipe(string title,string ingredients, string instructions, string category, DateTime date)
         {
+            var user = _userManager.CurrentUser;
             _recipes.Add(new Recipe
             {
                 Title = title,
                 Ingredients = ingredients,
                 Instructions = instructions,
-                Category = Category,
-                Date = DateTime.Now,
-                CreatedBy = _userManager.CurrentUser.Username,
-                OwnerId = _userManager.CurrentUser.Id
+                Category = category,
+                Date = date,
+                CreatedBy = user.Username
             });
+
+            ShowRecipe(); // refresh user-specific recipe list
         }
 
         // Update CreatedBy if username changes
         public void UpdateCreatedBy(string oldUsername, string newUsername)
         {
-            foreach (var r in _recipes
+            foreach (var r in Recipes
                 .Where(r => r.CreatedBy == oldUsername))
             {
                 r.CreatedBy = newUsername;   
