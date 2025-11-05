@@ -16,6 +16,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
     public class RecipeDetailsViewModel : ViewModelBase
     {
         private readonly RecipeManager _recipeManager;
+        private readonly UserManager _userManager;
         private Recipe _selectedRecipe;
         private string _error;
 
@@ -107,6 +108,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
 
         public ICommand SaveCommand { get; }
         public ICommand CancelCommand { get; }
+        public ICommand CopyCommand { get; }
 
 
         public RecipeDetailsViewModel(Recipe selectedRecipe, RecipeManager recipeManager)
@@ -114,8 +116,32 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             _recipeManager = recipeManager;
             _selectedRecipe = selectedRecipe;
             SaveCommand = new RelayCommand(_ => Save());
+            CopyCommand = new RelayCommand(_ => Copy());
             CancelCommand = new RelayCommand(_ => Cancel());
+        }
 
+        private void Copy()
+        {
+            if (SelectedRecipe == null)
+                return;
+
+            var newRecipe = new Recipe
+            {
+                Title = _selectedRecipe.Title + "(Copy)",
+                Ingredients = _selectedRecipe.Ingredients,
+                Instructions = _selectedRecipe.Instructions,
+                Category = _selectedRecipe.Category,
+                Date = DateTime.Now,
+            };
+
+            _recipeManager.AddRecipe(
+                newRecipe.Title,
+                newRecipe.Ingredients,
+                newRecipe.Instructions,
+                newRecipe.Category,
+                newRecipe.Date);
+
+            MessageBox.Show("Recipe has been copied as a template!");
         }
 
         private void Save()

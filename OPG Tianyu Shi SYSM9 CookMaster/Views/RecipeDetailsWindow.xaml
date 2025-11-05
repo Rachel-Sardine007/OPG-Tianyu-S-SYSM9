@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.Views" 
         xmlns:viewmodels="clr-namespace:OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:RecipeDetailsViewModel}"
         mc:Ignorable="d"
         Title="RecipeDetailsWindow" Height="450" Width="800">
     <Grid>
@@ -33,7 +34,7 @@
             <TextBox x:Name="Txb_Ins" Text="{Binding Instructions, UpdateSourceTrigger=PropertyChanged}"
                      Height="50"/>
             <TextBlock Text="Category"/>
-            <TextBox Text="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding Category,UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock x:Name="Txb_Category" Text="Date"/>
             <DatePicker x:Name="Txb_Date" Margin="0,5,0,5" Text="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
@@ -46,6 +47,7 @@
             <Button x:Name="Btn_Save" Content="Save" Margin="0,5,0,5" Command="{Binding SaveCommand}"
                     Visibility="Hidden"/>
             <Button x:Name="Btn_Edit" Content="Edit" Margin="0,5,0,5" Click="Button_Click"/>
+            <Button Content="Copy" Margin="0,5,0,5" Command="{Binding CopyCommand}"/>
             <Button Content="Cancel" Margin="0,5,0,5" Command="{Binding CancelCommand}"/>
         </StackPanel>
     </Grid>

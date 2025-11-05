@@ -73,7 +73,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
                 Ingredients = "Spaghetti, egg, cheese, bacon, pepper",
                 Instructions = "Cook pasta, mix ingredients.",
                 Category = "Main Course",
-                Date = DateTime.Now,
+                Date = new DateTime(2025,10,30,10,31,23),
                 CreatedBy = _userManager.UserList[2].Username, // can be more flexible if based on unique userID
             });
 
@@ -83,7 +83,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
                 Ingredients = "Beef, butter, garlic",
                 Instructions = "Pan fry both side of the steak for 1 min with butter and garlic. Don't let Chef Gordon down",
                 Category = "Main Course",
-                Date = DateTime.Now,
+                Date = new DateTime(2025,11,04,23,11,04),
                 CreatedBy = _userManager.UserList[2].Username,
             });
         }

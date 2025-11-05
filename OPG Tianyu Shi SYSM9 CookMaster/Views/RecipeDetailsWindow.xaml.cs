@@ -3,6 +3,7 @@ using OPG_Tianyu_Shi_SYSM9_CookMaster.Models;
 using OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,12 +23,11 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
     /// </summary>
     public partial class RecipeDetailsWindow : Window
     {
-        public Recipe SelectedRecipe { get; }
-
-        public RecipeDetailsWindow()
+        public RecipeDetailsWindow(Recipe selectedRecipe)
         {
             InitializeComponent();
-            // Since dataContext has been set in RecipeDetails VM
+            var recipeManager = (RecipeManager)Application.Current.Resources["RecipeManager"];
+            DataContext = new RecipeDetailsViewModel(selectedRecipe, recipeManager);
             Loaded += Vm_OnCancelRequested;
         }
 
