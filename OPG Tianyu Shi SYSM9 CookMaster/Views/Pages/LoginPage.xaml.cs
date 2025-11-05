@@ -29,7 +29,17 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views.Pages
             var userManager = (UserManager)Application.Current.Resources["UserManager"];
             var viewModel = new MainViewModel(userManager);
             viewModel.OnLoginSuccess += ViewModel_OnLoginSuccess;
+            viewModel.OpenForgotPwdWindowRequest += ViewModel_OpenForgotPwdWindowRequest;
             DataContext = viewModel;
+        }
+
+        private void ViewModel_OpenForgotPwdWindowRequest(object? sender, EventArgs e)
+        {
+            var userManager = (UserManager)Application.Current.Resources["UserManager"];
+            var forgotPasswordWindow = new ForgotPasswordWindow(userManager);
+            var oldWindow = Application.Current.MainWindow;
+            oldWindow.Close();
+            forgotPasswordWindow.ShowDialog();
         }
 
         private void ViewModel_OnLoginSuccess(object? sender, EventArgs e)

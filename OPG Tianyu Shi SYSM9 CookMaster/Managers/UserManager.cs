@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
@@ -41,6 +42,26 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
 
         }
 
+        // ResetPassword
+        public bool ResetPassword(string username, string answer, string newPassword)
+        {
+            var user = UserList.FirstOrDefault(u => u.Username == username);
+            if (!FindUser(username))
+            {
+                MessageBox.Show("User does not exist!");
+                return false;
+            }
+
+            if (!string.Equals(user.SecurityAnswer, answer, StringComparison.OrdinalIgnoreCase)){
+                MessageBox.Show("Wrong answer!");
+                return false;
+            }
+
+            user.Password = newPassword;
+            MessageBox.Show("The password has been reset!");
+            return true;
+        }
+
         // DefaultUsers
         public void SetDefaultUsers()
         {
@@ -55,7 +76,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
                 Username = "admin",
                 Password = "password",
                 Country = new CountryItem { Name="Sweden"},
-                Id = Guid.NewGuid()
+                //Id = Guid.NewGuid()
             });
 
             var sardine = new User
@@ -63,14 +84,16 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
                 Username = "sardine",
                 Password = "sardine007",
                 Country = china,
-                Id = Guid.NewGuid()
+                //Id = Guid.NewGuid()
             };
             var user = new User
             {
                 Username = "user",
                 Password = "password",
-                Country = new CountryItem { Name="Norway"},
-                Id = Guid.NewGuid()
+                Country = new CountryItem { Name = "Sweden" },
+                //Id = Guid.NewGuid()
+                SecurityQuestion = "What's your nationality?",
+                SecurityAnswer = "Sweden"
             };
 
             _users.Add(sardine);

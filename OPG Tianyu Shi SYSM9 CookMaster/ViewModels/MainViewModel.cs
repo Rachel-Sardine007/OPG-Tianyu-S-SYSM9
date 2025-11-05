@@ -56,8 +56,10 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
 
         // SetUp Login Command
         public ICommand LoginCommand { get; }
+        public ICommand OpenForgotPwdCommand { get; }
 
         public event System.EventHandler OnLoginSuccess;
+        public event System.EventHandler OpenForgotPwdWindowRequest;
 
         public MainViewModel(UserManager userManager)
         {
@@ -65,6 +67,12 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             LoginCommand = new RelayCommand(
                 execute => Login(),
                 canExecute => Canlogin());
+            OpenForgotPwdCommand = new RelayCommand(_ => OpenForgotPwd());
+        }
+
+        private void OpenForgotPwd()
+        {
+            OpenForgotPwdWindowRequest?.Invoke(this, System.EventArgs.Empty);
         }
 
         private bool Canlogin() => 

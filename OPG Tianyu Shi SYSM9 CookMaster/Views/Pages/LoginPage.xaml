@@ -13,21 +13,26 @@
         <StackPanel Margin="10">
             <StackPanel.Resources>
                 <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Margin" Value="0,0,0,5" />
+                    <Setter Property="Margin" Value="0,5,0,5" />
                     <Setter Property="TextAlignment" Value="Center"/>
                 </Style>
             </StackPanel.Resources>
             <Image Source="C:\Mac\Home\Documents\Csharp101\Inluppg\OPG Tianyu Shi SYSM9 CookMaster\OPG Tianyu Shi SYSM9 CookMaster\Views\Pages\SplashImage.png"
                     Width="300" Height="90"/>
-            <TextBlock Text="Welcome!" FontSize="30" />
+            <TextBlock Text="Welcome!" FontSize="30" FontWeight="Heavy"/>
             <TextBlock Text="{Binding Error}" Foreground="Red" />
             <TextBox Name="Txb_username" Text="{Binding Username, Mode=TwoWay}" Margin ="0,5,0,5" Width="200" />
             <PasswordBox x:Name="Pwd" Margin="0,5,0,10" Width="200" PasswordChanged="Pwd_PasswordChanged"/>
             <Button x:Name="Btn_Login" Content="Log in" Width ="60" Command="{Binding LoginCommand}"/>
-            <TextBlock Text="Forgot your password?" TextDecorations="Underline" />
+            <TextBlock>
+                <Hyperlink Command="{Binding OpenForgotPwdCommand}">
+                    Forgot your password?
+                </Hyperlink>
+            </TextBlock>
             <TextBlock Text=" 𓆝.° ｡˚𓆛˚｡ °.𓆞 "/>
             <TextBlock Text="New user?"/>
-            <Button x:Name="Btn_Register" Content="Register" Width="60" Click="Btn_Register_Click"/>
+            <Button x:Name="Btn_Register" Content="Register" Width="60" Click="Btn_Register_Click"
+                    Margin="0,5,0,5"/>
         </StackPanel>
         
     </Grid>
