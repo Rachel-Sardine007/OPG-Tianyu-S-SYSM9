@@ -22,7 +22,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         private string _username;
         private string _password;
         private string _error;
-        public string PlaceHolderText { get; set; }
 
         public string Username
         {
@@ -59,15 +58,15 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         public ICommand LoginCommand { get; }
         public ICommand OpenForgotPwdCommand { get; }
 
-        public event System.EventHandler OnLoginSuccess;
+        public event System.EventHandler OnLoginRequest;
         public event System.EventHandler OpenForgotPwdWindowRequest;
 
         public MainViewModel(UserManager userManager)
         {
             _userManager = userManager;
             LoginCommand = new RelayCommand(
-                execute => Login(),
-                canExecute => Canlogin());
+                execute => Login());
+                //canExecute => Canlogin());
             OpenForgotPwdCommand = new RelayCommand(_ => OpenForgotPwd());
         }
 
@@ -76,21 +75,25 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             OpenForgotPwdWindowRequest?.Invoke(this, System.EventArgs.Empty);
         }
 
-        private bool Canlogin() => 
-            !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
+        //private bool Canlogin() => 
+        //    !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
      
         private void Login()
         {
-            if (_userManager.Login(Username, Password))
+            if (string.IsNullOrWhiteSpace(Username) && string.IsNullOrWhiteSpace(Password))
             {
-                
-                OnLoginSuccess?.Invoke(this, System.EventArgs.Empty);
-            }
-            else
-            {
-                Error = "Incorrect username or password.";
+                Error = "Please fill in login information!";
+                return;
             }
 
+            if (!_userManager.Login(Username, Password))
+            {
+                Error = "Incorrect username or password.";
+                return;
+            }
+
+            Error = string.Empty;
+            OnLoginRequest?.Invoke(this, System.EventArgs.Empty);
         }
     }
 }

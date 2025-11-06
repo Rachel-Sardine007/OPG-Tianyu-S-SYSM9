@@ -114,11 +114,12 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 if (item is not Recipe recipe)
                     return false;
 
-                bool categoryMatch = _selectedCategory == "All" || recipe.Category == _selectedCategory;
+                bool categoryMatch = string.IsNullOrEmpty(SelectedCategory) 
+                    || _selectedCategory == "All" 
+                    || recipe.Category == _selectedCategory;
 
                 bool searchMatch = string.IsNullOrWhiteSpace(_searchText)
-                    || recipe.Title.Contains(_searchText, StringComparison.OrdinalIgnoreCase)
-                    || recipe.Ingredients.Contains(_searchText, StringComparison.OrdinalIgnoreCase);
+                    || recipe.Title.Contains(_searchText, StringComparison.OrdinalIgnoreCase);
 
                 bool dateMatch = !_selectedDate.HasValue || recipe.Date.Date == _selectedDate.Value.Date;
 
@@ -150,6 +151,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 mainWindow.Show();
                 currentWindow.Close();
             }
+            AppNavigator.Navigate(new LoginPage());
             _userManager.Logout();
         }
 

@@ -28,9 +28,18 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views.Pages
             InitializeComponent();
             var userManager = (UserManager)Application.Current.Resources["UserManager"];
             var viewModel = new MainViewModel(userManager);
-            viewModel.OnLoginSuccess += ViewModel_OnLoginSuccess;
+            viewModel.OnLoginRequest += ViewModel_OnLoginRequest;
+            //viewModel.OnLoginSuccess += ViewModel_OnLoginSuccess;
             viewModel.OpenForgotPwdWindowRequest += ViewModel_OpenForgotPwdWindowRequest;
             DataContext = viewModel;
+        }
+
+        private void ViewModel_OnLoginRequest(object? sender, EventArgs e)
+        {   
+            var verification = new VerificationWindow();
+            var oldWindow = Application.Current.MainWindow;
+            oldWindow.Close();
+            verification.Show();
         }
 
         private void ViewModel_OpenForgotPwdWindowRequest(object? sender, EventArgs e)
@@ -39,20 +48,20 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views.Pages
             var forgotPasswordWindow = new ForgotPasswordWindow(userManager);
             var oldWindow = Application.Current.MainWindow;
             oldWindow.Close();
-            forgotPasswordWindow.ShowDialog();
+            forgotPasswordWindow.Show();
         }
 
-        private void ViewModel_OnLoginSuccess(object? sender, EventArgs e)
-        {
-            //// Load UserPanelPage
-            //AppNavigator.Navigate(new UserPanelPage());
+        //private void ViewModel_OnLoginSuccess(object? sender, EventArgs e)
+        //{
+        //    //// Load UserPanelPage
+        //    //AppNavigator.Navigate(new UserPanelPage());
 
-            // Direct to RecipeListWindow 
-            RecipeListWindow recipeListWindow = new RecipeListWindow();
-            var oldWindow = Application.Current.MainWindow;
-            oldWindow.Close();
-            recipeListWindow.Show();
-        }
+        //    // Direct to RecipeListWindow 
+        //    RecipeListWindow recipeListWindow = new RecipeListWindow();
+        //    var oldWindow = Application.Current.MainWindow;
+        //    oldWindow.Close();
+        //    recipeListWindow.Show();
+        //}
 
         // PasswordBox 
         private void Pwd_PasswordChanged(object s, RoutedEventArgs e)

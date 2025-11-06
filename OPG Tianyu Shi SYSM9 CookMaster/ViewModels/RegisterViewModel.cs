@@ -71,14 +71,11 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 _confirmPassword = value;
                 OnPropertyChanged();
 
-                if(_confirmPassword != _password)
-                {
-                    Error = $"Passwords do not match";
-                }
-                else
+                if(_confirmPassword == _password)
                 {
                     Error = string.Empty;
                 }
+                Error = "Passwords do not match";
             }
         }
 
