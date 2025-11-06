@@ -79,7 +79,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                     _selectedRecipe.Category = value;
                     OnPropertyChanged();
                 }
-
             }
         }
 
@@ -146,7 +145,14 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
 
         private void Save()
         {
-            MessageBox.Show("Recipe saved successfully!", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+            if(string.IsNullOrWhiteSpace(Title)&& string.IsNullOrWhiteSpace(Category)
+                &&string.IsNullOrWhiteSpace(Ingredients) && string.IsNullOrWhiteSpace(Instructions))
+            {
+                Error = "Please fill all blank area :)";
+                return;
+            }
+
+            MessageBox.Show("Recipe updated successfully!", "Saved", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         public event System.EventHandler OnCancelRequested;

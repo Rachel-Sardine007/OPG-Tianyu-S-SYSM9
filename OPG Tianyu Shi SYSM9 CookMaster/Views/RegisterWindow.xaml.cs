@@ -68,7 +68,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
         //                      {
         //                          Name = c.Element("short_desc")?.Value,
         //                          Code = c.Element("country_code")?.Value
-
         //                      };
         //    Cmb_Country.ItemsSource = countryList.ToList();
         //    Cmb_Country.DisplayMemberPath = "Name";

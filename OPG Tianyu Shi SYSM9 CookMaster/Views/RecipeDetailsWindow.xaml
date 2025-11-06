@@ -24,19 +24,27 @@
                     <Setter Property="IsEnabled" Value="False"/>
                 </Style>
             </StackPanel.Resources>
-            <TextBlock Text="Recipe Details" FontSize="25"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <TextBlock Text="Recipe Details" FontSize="25" FontWeight="Medium" Margin="0,0,50,0"/>
+                <Image Source="C:\Mac\Home\Documents\Csharp101\Inluppg\OPG Tianyu Shi SYSM9 CookMaster\OPG Tianyu Shi SYSM9 CookMaster\Views\Pages\SplashImage.png"
+                Width="110"/>
+            </StackPanel>
             <TextBlock Text="{Binding Error}" Foreground="Red"/>
             <TextBlock Text="Title"/>
-            <TextBox x:Name="Txb_Title" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
+                     x:Name="Txb_Title"/>
             <TextBlock Text="Ingredients"/>
-            <TextBox x:Name="Txb_Ing" Text="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}"
+                     x:Name="Txb_Ing"/>
             <TextBlock Text="Instruction"/>
-            <TextBox x:Name="Txb_Ins" Text="{Binding Instructions, UpdateSourceTrigger=PropertyChanged}"
-                     Height="50"/>
+            <TextBox Text="{Binding Instructions, UpdateSourceTrigger=PropertyChanged}"
+                     x:Name="Txb_Ins" Height="50"/>
             <TextBlock Text="Category"/>
-            <TextBox Text="{Binding Category,UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock x:Name="Txb_Category" Text="Date"/>
-            <DatePicker x:Name="Txb_Date" Margin="0,5,0,5" Text="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     x:Name="Txb_Category"/>
+            <TextBlock Text="Date"/>
+            <DatePicker x:Name="Txb_Date" Margin="0,5,0,5" 
+                        Text="{Binding SelectedDate,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <StackPanel Grid.Column="2" Grid.ColumnSpan="2" Margin="10" VerticalAlignment="Center">
             <StackPanel.Resources>
@@ -48,7 +56,7 @@
                     Visibility="Hidden"/>
             <Button x:Name="Btn_Edit" Content="Edit" Margin="0,5,0,5" Click="Button_Click"/>
             <Button Content="Copy" Margin="0,5,0,5" Command="{Binding CopyCommand}"/>
-            <Button Content="Cancel" Margin="0,5,0,5" Command="{Binding CancelCommand}"/>
+            <Button Content="Return" Margin="0,5,0,5" Command="{Binding CancelCommand}"/>
         </StackPanel>
     </Grid>
 </Window>

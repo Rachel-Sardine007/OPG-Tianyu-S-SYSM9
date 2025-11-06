@@ -191,7 +191,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
 
         private void OpenRecipeDetails()
         {
-            var recipe = SelectedRecipe;
+            var recipe = _selectedRecipe;
             if (recipe == null) return;
 
             var currentWindow = Application.Current.Windows

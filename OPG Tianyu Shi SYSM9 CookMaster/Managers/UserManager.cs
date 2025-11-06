@@ -157,6 +157,17 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Managers
             
         }
 
+        // Method to control password
+        // need to be updated: double check password --> property set
+        public bool ValidatePassword(string password)
+        {
+            if (password.Length >= 8 && password.Any(ch => char.IsUpper(ch)) && password.Any(ch => !char.IsLetterOrDigit(ch)))
+            {
+                return true;
+            }
+            return false;
+        }
+
         // for persistence only 
         public void ChangePassword(string username, string password)
         {

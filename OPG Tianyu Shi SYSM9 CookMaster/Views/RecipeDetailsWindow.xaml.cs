@@ -27,21 +27,24 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.Views
         {
             InitializeComponent();
             var recipeManager = (RecipeManager)Application.Current.Resources["RecipeManager"];
-            DataContext = new RecipeDetailsViewModel(selectedRecipe, recipeManager);
-            Loaded += Vm_OnCancelRequested;
+            var vm = new RecipeDetailsViewModel(selectedRecipe, recipeManager);
+            DataContext = vm;
+            vm.OnCancelRequested += Vm_OnCancelRequested;
         }
 
         private void Vm_OnCancelRequested(object? sender, EventArgs e)
         {
-            if(DataContext is RecipeDetailsViewModel vm)
+            var currentWindow = Application.Current.Windows
+                .OfType<Window>()
+                .SingleOrDefault(x => x.IsActive);
+            if (currentWindow != null)
             {
-                vm.OnCancelRequested += (_, __) =>
-                {
-                    this.Close();
-                    var listWindow = new RecipeListWindow();
-                    listWindow.Show();
-                };
+                var newWindow = new RecipeListWindow();
+                Application.Current.MainWindow = newWindow;
+                newWindow.Show();
+                currentWindow.Close();
             }
+            this.Close();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

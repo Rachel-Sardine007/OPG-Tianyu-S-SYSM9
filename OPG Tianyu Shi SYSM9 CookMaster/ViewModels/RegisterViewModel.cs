@@ -14,15 +14,15 @@ using System.Windows.Input;
 
 namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
 {
-    public class RegisterViewModel: ViewModelBase
-    {   
+    public class RegisterViewModel : ViewModelBase
+    {
         // Property
         private readonly UserManager _userManager;
         private string _username { get; set; }
         private string _password { get; set; }
-        private string _confirmPassword {  get; set; } // re-enter password
-        private CountryItem _selectedCountry { get; set; } 
-        private string _error {  get; set; }
+        private string _confirmPassword { get; set; } // re-enter password
+        private CountryItem _selectedCountry { get; set; }
+        private string _error { get; set; }
 
         public ObservableCollection<CountryItem> CountryList { get; } // get CountryList
 
@@ -40,7 +40,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                     if (_userManager.FindUser(Username))
                     {
                         Error = "Username already exists";
-                 
+
                     }
                     else
                     {
@@ -48,7 +48,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                     }
 
                     // Call property when RegisterCommand runs
-                    CommandManager.InvalidateRequerySuggested();
+                    //CommandManager.InvalidateRequerySuggested();
 
                 }
             }
@@ -60,22 +60,24 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             {
                 _password = value;
                 OnPropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
             }
         }
         public string ConfirmPassword
         {
             get => _confirmPassword;
-            set // ?? Error shows directly and constantly
+            set
             {
                 _confirmPassword = value;
                 OnPropertyChanged();
 
-                if(_confirmPassword == _password)
+                if (_confirmPassword == _password)
                 {
                     Error = string.Empty;
                 }
-                Error = "Passwords do not match";
+                else
+                {
+                    Error = "Passwords do not match";
+                }
             }
         }
 
@@ -86,7 +88,6 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             {
                 _selectedCountry = value;
                 OnPropertyChanged();
-                CommandManager.InvalidateRequerySuggested();
             }
         }
 
@@ -107,14 +108,13 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         public event System.EventHandler OnRegisterSuccess;
 
         // Constructor
-        public RegisterViewModel( UserManager userManager)
+        public RegisterViewModel(UserManager userManager)
         {
             _userManager = userManager;
             CountryList = new ObservableCollection<CountryItem>(CountryService.LoadCountryList());
             RegisterCommand = new RelayCommand(
-                excute => CreateUser(),
-                canExcute => CanRegister());
-
+                excute => CreateUser());
+            //canExcute => CanRegister());
 
         }
 
@@ -122,47 +122,41 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         private bool CanRegister()
         {
             if (!string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password)
-            && !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(SelectedCountry?.Name)) 
-            {
-                return true;
-            }
-                return false; 
-        }
-
-
-        // Method to control password
-        // need to be updated: double check password --> property set
-        public bool ValidatePassword(string password)
-        {
-            if (password.Length >= 8 && password.Any(ch => char.IsUpper(ch)) && password.Any(ch => !char.IsLetterOrDigit(ch)))
+            && !string.IsNullOrWhiteSpace(ConfirmPassword) && !string.IsNullOrWhiteSpace(SelectedCountry?.Name))
             {
                 return true;
             }
             return false;
         }
 
+
         // Call usermanager methods to check if username already exists and validate password 
         // Event Dialog 
         private void CreateUser()
         {
-            if (!_userManager.FindUser(Username))
+            if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password)
+            || string.IsNullOrWhiteSpace(ConfirmPassword) || string.IsNullOrWhiteSpace(SelectedCountry?.Name))
             {
-                if (ValidatePassword(Password))
-                {
-                    _userManager.Register(Username, Password, SelectedCountry);
-                    OnRegisterSuccess?.Invoke(this, System.EventArgs.Empty);
-                    MessageBox.Show("Register successfully!");
-                }
-                else
-                {
-                    Error = "Password must be 8 character long " +
-                        "and includes 1 number and 1 special character!";
-                }
+                Error = "Please fill in all blank columns!";
+                return;
             }
-                
-        }
 
-        
+            if (_userManager.FindUser(Username))
+            {
+                Error = "Username already exist.";
+                return;
+            }
+
+            if (!_userManager.ValidatePassword(Password))
+            {
+                Error = "Password must be 8 character long " +
+                    "and includes 1 number and 1 special character!";
+                return;
+            }
+            _userManager.Register(Username, Password, SelectedCountry);
+            OnRegisterSuccess?.Invoke(this, System.EventArgs.Empty);
+            MessageBox.Show("Register successfully!");
+        }
 
     }
 }

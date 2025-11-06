@@ -2,10 +2,12 @@
 using OPG_Tianyu_Shi_SYSM9_CookMaster.MVVM;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
@@ -69,6 +71,13 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
         public event System.EventHandler OnResetSuccess;
         private void ResetPassword()
         {
+            if (!_userManager.ValidatePassword(NewPassword))
+            {
+                MessageBox.Show("Password must be 8 character long" +
+                    "and includes 1 number and 1 special character!",
+                    "Error");
+                return;
+            }
             _userManager.ResetPassword(Username, SecurityAnswer, NewPassword);
             OnResetSuccess?.Invoke(this, System.EventArgs.Empty);
         }

@@ -10,8 +10,11 @@ d:DataContext="{d:DesignInstance Type=viewmodels:RegisterViewModel}"
         Title="RegisterWindow" Height="450" Width="800">
     <ScrollViewer>
         <StackPanel Margin="20">
-            <TextBlock Text="New User Register" FontSize="35" TextAlignment="Center"/>
-            <TextBlock Text="{Binding Error}" Foreground="Red" TextAlignment="Left" Width="200" Height="30"/>
+            <TextBlock Text="New User Register" FontSize="30" FontWeight="Medium"
+                       TextAlignment="Center"/>
+            <TextBlock Text="{Binding Error}" Foreground="Red" 
+                       TextAlignment="Left" Width="200" Height="50"
+                       TextWrapping="Wrap"/>
             <TextBlock Text="Username" TextAlignment="Left" Width="200"/>
             <TextBox Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                     Margin ="0,5,0,5" Width="200" />
@@ -23,8 +26,7 @@ d:DataContext="{d:DesignInstance Type=viewmodels:RegisterViewModel}"
             <ComboBox x:Name="Cmb_Country" Height="20" Width="200" Margin="0,5,0,0"
                       ItemsSource="{Binding CountryList}"
                       DisplayMemberPath="Name"
-                      SelectedValuePath="Name"
-                      SelectedValue="{Binding SelectedCountry.Name, Mode=TwoWay}"/>
+                      SelectedValue="{Binding SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <!--button binding-->
             <Button x:Name="Btn_Register" Content="Register" Width="60" Margin="0,10,0,10" 
                     Command="{Binding RegisterCommand}"/>
