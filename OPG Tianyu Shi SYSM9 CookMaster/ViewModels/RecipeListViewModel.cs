@@ -36,6 +36,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             {
                 _selectedRecipe = value;
                 OnPropertyChanged();
+                CommandManager.InvalidateRequerySuggested();
             }
         }
 

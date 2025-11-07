@@ -35,6 +35,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
                 {
                     _username = value;
                     OnPropertyChanged();
+                    CommandManager.InvalidateRequerySuggested();
 
                     // Call FindUser method to check if username already exists 
                     if (_userManager.FindUser(Username))
@@ -60,6 +61,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             {
                 _password = value;
                 OnPropertyChanged();
+                CommandManager.InvalidateRequerySuggested();
             }
         }
         public string ConfirmPassword
@@ -69,6 +71,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             {
                 _confirmPassword = value;
                 OnPropertyChanged();
+                CommandManager.InvalidateRequerySuggested();
 
                 if (_confirmPassword == _password)
                 {
@@ -88,6 +91,7 @@ namespace OPG_Tianyu_Shi_SYSM9_CookMaster.ViewModels
             {
                 _selectedCountry = value;
                 OnPropertyChanged();
+                CommandManager.InvalidateRequerySuggested();
             }
         }
 
